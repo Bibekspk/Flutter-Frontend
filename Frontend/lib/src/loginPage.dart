@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_login_signup/models/loginmodel.dart';
 import 'package:flutter_login_signup/src/welcomePage.dart';
 import 'package:flutter_login_signup/src/signup.dart';
-import '../models/loginmodel.dart';
 import 'package:http/http.dart' as http;
-// import '../api/loginapi.dart';
 import 'dart:convert';
 
 class LoginPage extends StatefulWidget {
@@ -15,7 +14,7 @@ class _State extends State<LoginPage> {
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  Model model = Model();
+  Model loginmodel = Model();
 
   @override
   Widget build(BuildContext context) {
@@ -24,18 +23,13 @@ class _State extends State<LoginPage> {
       body: Container(
           padding: EdgeInsets.all(10),
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(5)),
-              boxShadow: <BoxShadow>[
-                BoxShadow(
-                    color: Colors.grey.shade200,
-                    offset: Offset(2, 4),
-                    blurRadius: 5,
-                    spreadRadius: 2)
-              ],
               gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: [Colors.cyan[400], Color(0xffe46b10)])),
+                  colors: [
+                Color.fromRGBO(245, 124, 0, 1),
+                Color.fromRGBO(13, 71, 161, 1)
+              ])),
           child: ListView(
             children: <Widget>[
               Image.asset(
@@ -57,10 +51,11 @@ class _State extends State<LoginPage> {
                 padding: EdgeInsets.all(10),
                 child: TextField(
                   controller: nameController,
+                  style: TextStyle(fontSize: 17.5),
                   decoration: InputDecoration(
-                      // border: OutlineInputBorder(),
+                      border: OutlineInputBorder(),
                       labelText: 'User Name',
-                      fillColor: Color(0xfff3f3f4),
+                      fillColor: Colors.transparent,
                       filled: true),
                 ),
               ),
@@ -68,11 +63,12 @@ class _State extends State<LoginPage> {
                 padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
                 child: TextField(
                   obscureText: true,
+                  style: TextStyle(fontSize: 17.5),
                   controller: passwordController,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Password',
-                      fillColor: Color(0xfff3f3f4),
+                      fillColor: Colors.transparent,
                       filled: true),
                 ),
               ),
@@ -122,11 +118,11 @@ class _State extends State<LoginPage> {
   }
 
   void sendData() async {
-    model =
+    loginmodel =
         Model(email: nameController.text, password: passwordController.text);
     var response = await http.post("http://10.0.2.2:5000/api/login",
         headers: {"Content-type": "application/json"},
-        body: json.encode(model.toJson()));
+        body: json.encode(loginmodel.toJson()));
     print(response.body);
     if (response.statusCode == 201) {
       Navigator.push(
