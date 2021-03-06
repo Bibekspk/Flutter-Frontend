@@ -94,8 +94,6 @@ class _State extends State<LoginPage> {
                         style: TextStyle(fontSize: 25),
                       ),
                       onPressed: () {
-                        // print(nameController.text);
-                        // print(passwordController.text);
                         sendData();
                       })),
               Container(
@@ -130,7 +128,11 @@ class _State extends State<LoginPage> {
         headers: {"Content-type": "application/json"},
         body: json.encode(model.toJson()));
     print(response.body);
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => WelcomePage()));
+    if (response.statusCode == 201) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => WelcomePage()));
+    } else {
+      print(Error);
+    }
   }
 }
