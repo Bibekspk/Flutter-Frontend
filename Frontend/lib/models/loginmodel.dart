@@ -1,15 +1,32 @@
 class Model {
   String email;
   String password;
-  // String xyz;
   Model({this.email, this.password});
-  // factory Model.fromJson(Map<String, dynamic> json) => _$ModelFromJson(json);
-  Map<String, dynamic> toJson() => _$ModelToJson(this);
 
-  _$ModelToJson(Model instance) => <String, dynamic>{
-        'email': instance.email,
-        'password': instance.password,
-      };
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> map = {
+      'email': email.trim(),
+      'password': password.trim(),
+    };
+
+    return map;
+  }
+}
+
+class LoginResponseModel {
+  final String name;
+  final String token;
+  final String error;
+
+  LoginResponseModel({this.name, this.token, this.error});
+
+  factory LoginResponseModel.fromJson(Map<String, dynamic> json) {
+    return LoginResponseModel(
+      name: json["name"] != null ? json["name"] : "",
+      token: json["token"] != null ? json["token"] : "",
+      error: json["message"] != null ? json["message"] : "",
+    );
+  }
 }
 // Model _$ModelFromJson(Map<String, dynamic> json) {
 //   return Model(
