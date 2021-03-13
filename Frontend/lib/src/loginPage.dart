@@ -118,11 +118,11 @@ class _State extends State<LoginPage> {
                                   });
 
                                   if (value.token.isNotEmpty) {
-                                    FlutterSession().set("name", value.name);
                                     final snackBar = SnackBar(
                                         content: Text("Login Successful"));
                                     scaffoldKey.currentState
                                         .showSnackBar(snackBar);
+                                    FlutterSession().set("name", value.name);
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_login_signup/src/addRoom.dart';
 import 'package:flutter_session/flutter_session.dart';
 
 class Body extends StatefulWidget {
@@ -84,7 +85,17 @@ class _State extends State<Body> {
               ),
             ],
           ),
-        )
+        ),
+        IconButton(
+          // focusColor: Colors.blue,
+          iconSize: 50,
+          // splashColor: Colors.white,
+          icon: Icon(Icons.add_circle, color: Colors.blue, size: 50),
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => Roompage()));
+          },
+        ),
       ],
     );
   }
