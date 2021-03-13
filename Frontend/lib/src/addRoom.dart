@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_login_signup/src/loginPage.dart';
+// import 'package:flutter_login_signup/src/loginPage.dart';
 import 'package:flutter_login_signup/src/welcomePage.dart';
 import 'package:flutter_login_signup/models/registermodel.dart';
 
@@ -27,6 +27,7 @@ class _AddRoomPageState extends State<Roompage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(backgroundColor: Color.fromRGBO(13, 71, 161, 1)),
       body: Form(
           key: globalFormKey,
           child: Container(
@@ -59,7 +60,7 @@ class _AddRoomPageState extends State<Roompage> {
                       controller: nameController,
                       keyboardType: TextInputType.text,
                       validator: (input) => !(input.length > 3)
-                          ? "Plese provide valid name"
+                          ? "Plese provide valid room information"
                           : null,
                       decoration: InputDecoration(
                           labelText: 'Room Title',
@@ -68,7 +69,7 @@ class _AddRoomPageState extends State<Roompage> {
                           fillColor: Color(0x00000000),
                           filled: true,
                           errorStyle:
-                              TextStyle(fontSize: 16.0, color: Colors.black),
+                              TextStyle(fontSize: 19.0, color: Colors.black),
                           enabledBorder: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(5))),
@@ -84,11 +85,12 @@ class _AddRoomPageState extends State<Roompage> {
                       style: TextStyle(fontSize: 19),
                       controller: emailController,
                       keyboardType: TextInputType.emailAddress,
-                      validator: (input) =>
-                          !input.contains("@") ? "Email should be valid" : null,
+                      validator: (input) => !(input.length > 3)
+                          ? "Plese provide valid room information"
+                          : null,
                       decoration: InputDecoration(
                           errorStyle:
-                              TextStyle(fontSize: 16.0, color: Colors.black),
+                              TextStyle(fontSize: 19.0, color: Colors.black),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(5)),
                           ),
@@ -147,13 +149,12 @@ class _AddRoomPageState extends State<Roompage> {
                   Container(
                     padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
                     child: TextFormField(
-                      obscureText: true,
+                      // obscureText: true,
                       style: TextStyle(fontSize: 17.5),
                       controller: confirmpasswordController,
-                      validator: (input) =>
-                          !(input == (passwordController.text))
-                              ? "Passwords donot match"
-                              : null,
+                      validator: (input) => !(input.length > 3)
+                          ? "Plese provide valid room information"
+                          : null,
                       decoration: InputDecoration(
                           errorStyle:
                               TextStyle(fontSize: 16.0, color: Colors.black),
@@ -179,33 +180,33 @@ class _AddRoomPageState extends State<Roompage> {
                           textColor: Colors.white,
                           color: Color.fromRGBO(239, 108, 0, 0.9),
                           child: Text(
-                            'Regsiter',
+                            'Add Room',
                             style: TextStyle(fontSize: 23),
                           ),
                           onPressed: () {
                             validate();
                             print(emailController.text);
                           })),
-                  Container(
-                      child: Row(
-                    children: <Widget>[
-                      Text('Already Have an account?'),
-                      FlatButton(
-                        textColor: Colors.amber,
-                        child: Text(
-                          'Login',
-                          style: TextStyle(fontSize: 18),
-                        ),
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => LoginPage()));
-                        },
-                      )
-                    ],
-                    mainAxisAlignment: MainAxisAlignment.center,
-                  ))
+                  // Container(
+                  //     child: Row(
+                  //   children: <Widget>[
+                  //     Text('Already Have an account?'),
+                  //     FlatButton(
+                  //       textColor: Colors.amber,
+                  //       child: Text(
+                  //         'Login',
+                  //         style: TextStyle(fontSize: 18),
+                  //       ),
+                  //       onPressed: () {
+                  //         Navigator.push(
+                  //             context,
+                  //             MaterialPageRoute(
+                  //                 builder: (context) => LoginPage()));
+                  //       },
+                  //     )
+                  //   ],
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  // ))
                 ],
               ))),
     );
