@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+// import 'package:flutter_login_signup/models/addRoomodel.dart';
+import 'package:flutter_login_signup/src/addRoom.dart';
 import 'package:flutter_session/flutter_session.dart';
 import 'package:flutter_login_signup/models/loginmodel.dart';
 import 'package:flutter_login_signup/api/loginapi.dart';
+// import 'package:flutter_login_signup/api/addRoom.dart';
+
 import 'package:flutter_login_signup/src/homepage.dart';
 import 'package:flutter_login_signup/src/signup.dart';
 
@@ -91,6 +95,8 @@ class _State extends State<LoginPage> {
                   FlatButton(
                     onPressed: () {
                       //forgot password screen
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Roompage()));
                     },
                     textColor: Colors.black,
                     child: Text('Forgot Password ?'),

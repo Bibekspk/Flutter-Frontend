@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_login_signup/src/addimg.dart';
+// import 'package:flutter_login_signup/src/addimg.dart';
+// import 'package:flutter_login_signup/src/homepage.dart';
 import 'package:flutter_login_signup/src/welcomePage.dart';
 import 'package:flutter_login_signup/models/registermodel.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+// import 'dart:io';
+// import 'package:image_picker/image_picker.dart';
+import 'package:multi_image_picker/multi_image_picker.dart';
 
 class Roompage extends StatefulWidget {
   @override
@@ -20,11 +24,63 @@ class _AddRoomPageState extends State<Roompage> {
   TextEditingController emailController = TextEditingController();
 
   RegisterModel regmodel = RegisterModel();
+  bool circular = false;
+  // File _imageFile;
+  List<Asset> images = <Asset>[];
+  String _error = 'No Error Dectected';
 
+  // final _globalkey = GlobalKey<FormState>();
   GlobalKey<FormState> globalFormKey = new GlobalKey<FormState>();
 
   bool parking;
   bool bathroom;
+
+  Widget buildGridView() {
+    return GridView.count(
+      crossAxisCount: 3,
+      children: List.generate(images.length, (index) {
+        Asset asset = images[index];
+        return AssetThumb(
+          asset: asset,
+          width: 300,
+          height: 300,
+        );
+      }),
+    );
+  }
+
+  Future<void> loadAssets() async {
+    List<Asset> resultList = <Asset>[];
+    String error = 'No Error Detected';
+
+    try {
+      resultList = await MultiImagePicker.pickImages(
+        maxImages: 5,
+        enableCamera: true,
+        selectedAssets: images,
+        cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
+        materialOptions: MaterialOptions(
+          actionBarColor: "#abcdef",
+          actionBarTitle: "Example App",
+          allViewTitle: "All Photos",
+          useDetailsView: false,
+          selectCircleStrokeColor: "#000000",
+        ),
+      );
+    } on Exception catch (e) {
+      error = e.toString();
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) return;
+
+    setState(() {
+      images = resultList;
+      _error = error;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -157,10 +213,15 @@ class _AddRoomPageState extends State<Roompage> {
                     splashColor: Colors.white,
                     icon: Icon(Icons.add_a_photo, color: Colors.blue, size: 50),
                     onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Imgpicker()));
+                      // takePhoto(ImageSource.gallery);
+                      loadAssets();
+                      print(images);
                     },
                   ),
+                ),
+                Container(
+                  height: 150,
+                  child: buildGridView(),
                 ),
                 Container(
                     padding: EdgeInsets.all(10),
@@ -258,35 +319,6 @@ class _AddRoomPageState extends State<Roompage> {
                     ],
                   ),
                 ),
-
-                // Row(
-                //   children: <Widget>[
-                //     ListTile(
-                //       title: const Text('Lafayette'),
-                //       leading: Radio(
-                //         value: status.available,
-                //         groupValue: _value,
-                //         onChanged: (status value) {
-                //           setState(() {
-                //             _value = value;
-                //           });
-                //         },
-                //       ),
-                //     ),
-                //     ListTile(
-                //       title: const Text('Thomas Jefferson'),
-                //       leading: Radio(
-                //         value: status.available,
-                //         groupValue: _value,
-                //         onChanged: (status value) {
-                //           setState(() {
-                //             _value = value;
-                //           });
-                //         },
-                //       ),
-                //     ),
-                //   ],
-                // ),
                 Container(
                     height: 50,
                     padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
@@ -298,9 +330,28 @@ class _AddRoomPageState extends State<Roompage> {
                           'Add Room',
                           style: TextStyle(fontSize: 23),
                         ),
-                        onPressed: () {
-                          validate();
-                          print(emailController.text);
+                        onPressed: () async {
+                          // loadAssets();
+                          // if (_imageFile.path == null) {
+                          //   print("Image");
+                          //   var imageResponse = await sendImg(
+                          //       "/profile/add/image", _imageFile.path);
+
+                          //   if (imageResponse.statusCode == 200) {
+                          //     setState(() {
+                          //       circular = false;
+                          //     });
+                          //     Navigator.of(context).pushAndRemoveUntil(
+                          //         MaterialPageRoute(
+                          //             builder: (context) => HomeScreen()),
+                          //         (route) => false);
+                          //   }
+                          // } else {
+                          //   setState(() {
+                          //     circular = false;
+                          //   });
+                          //   print("Couldnot send img to server");
+                          // }
                         })),
               ]),
             )));
@@ -325,6 +376,15 @@ class _AddRoomPageState extends State<Roompage> {
     }
   }
 
+  // void takePhoto(ImageSource source) async {
+  //   final pickedFile = await ImagePicker.pickImage(
+  //     source: source,
+  //   );
+  //   setState(() {
+  //     _imageFile = pickedFile;
+  //   });
+  // }
+
   bool validate() {
     final form = globalFormKey.currentState;
     //If form is valid then it returns true
@@ -333,5 +393,14 @@ class _AddRoomPageState extends State<Roompage> {
       return true;
     }
     return false;
+  }
+
+  Future sendImg(String url, String filepath) async {
+    var request = http.MultipartRequest('PATCH', Uri.parse(url));
+    request.files.add(await http.MultipartFile.fromPath("img", filepath));
+    request.headers.addAll(
+        {"Content-type": "multipart/form-data", "Authorization": "Bearer"});
+    var response = request.send();
+    print(response);
   }
 }
