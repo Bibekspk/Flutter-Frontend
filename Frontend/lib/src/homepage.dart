@@ -1,5 +1,5 @@
 // import 'dart:html';
-
+import 'package:flutter_login_signup/src/components/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login_signup/src/components/body.dart';
 // import 'package:flutter_svg/svg.dart';
@@ -14,6 +14,7 @@ class HomeScreen extends StatelessWidget {
         leading: AppbarWidget(),
       ),
       body: Body(),
+      bottomNavigationBar: bottombar(context),
     );
   }
 }

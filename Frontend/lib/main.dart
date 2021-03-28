@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'src/welcomePage.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_login_signup/src/components/easyloading.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(MyApp());
+  configLoading();
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -19,6 +24,7 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       home: WelcomePage(),
+      builder: EasyLoading.init(),
     );
   }
 }

@@ -26,11 +26,11 @@ class _State extends State<Body> {
           child: Stack(
             children: <Widget>[
               Container(
-                  margin: EdgeInsets.fromLTRB(15, 25, 0, 0),
+                  margin: EdgeInsets.fromLTRB(15, 20, 0, 0),
                   child: Row(
                     children: <Widget>[
                       Text(
-                        "Welcome user,  ",
+                        "Welcome, ",
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 21),
                       ),
@@ -56,7 +56,7 @@ class _State extends State<Body> {
               Positioned(
                 child: Container(
                   alignment: Alignment.center,
-                  margin: EdgeInsets.fromLTRB(10, 75, 10, 0),
+                  margin: EdgeInsets.fromLTRB(10, 60, 10, 0),
                   height: 54,
                   decoration: BoxDecoration(
                       color: Colors.white,
@@ -88,6 +88,7 @@ class _State extends State<Body> {
           ),
         ),
         IconButton(
+          alignment: Alignment.center,
           // focusColor: Colors.blue,
           iconSize: 50,
           // splashColor: Colors.white,

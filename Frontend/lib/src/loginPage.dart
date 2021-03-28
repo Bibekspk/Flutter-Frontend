@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter_login_signup/models/addRoomodel.dart';
+import 'package:flutter_login_signup/src/components/progress_HUD.dart';
 import 'package:flutter_login_signup/src/addRoom.dart';
 import 'package:flutter_session/flutter_session.dart';
+// import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_login_signup/models/loginmodel.dart';
 import 'package:flutter_login_signup/api/loginapi.dart';
 // import 'package:flutter_login_signup/api/addRoom.dart';
-
 import 'package:flutter_login_signup/src/homepage.dart';
 import 'package:flutter_login_signup/src/signup.dart';
 
@@ -21,8 +21,18 @@ class _State extends State<LoginPage> {
   bool isApiCallProcess = false;
   Model requestModel = Model();
 
+  var session = FlutterSession(); // create session instance
+
   GlobalKey<FormState> globalFormKey = new GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  Widget build1(BuildContext context) {
+    return ProgressHUD(
+      child: build(context),
+      inAsyncCall: isApiCallProcess,
+      opacity: 0.3,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +79,8 @@ class _State extends State<LoginPage> {
                           : null,
                       style: TextStyle(fontSize: 17.5),
                       decoration: InputDecoration(
+                          errorStyle:
+                              TextStyle(fontSize: 16.0, color: Colors.white),
                           border: OutlineInputBorder(),
                           labelText: 'User Name',
                           fillColor: Colors.transparent,
@@ -83,9 +95,11 @@ class _State extends State<LoginPage> {
                       controller: passwordController,
                       // onSaved: (input) => loginRequestModel.password = input,
                       validator: (input) => !(input.length > 3)
-                          ? "Plese provide valid name"
+                          ? "Please provide password!!"
                           : null,
                       decoration: InputDecoration(
+                          errorStyle:
+                              TextStyle(fontSize: 16.0, color: Colors.white),
                           border: OutlineInputBorder(),
                           labelText: 'Password',
                           fillColor: Colors.transparent,
@@ -111,7 +125,7 @@ class _State extends State<LoginPage> {
                             'Login',
                             style: TextStyle(fontSize: 25),
                           ),
-                          onPressed: () {
+                          onPressed: () async {
                             if (validate()) {
                               setState(() {
                                 isApiCallProcess = true;
@@ -128,7 +142,9 @@ class _State extends State<LoginPage> {
                                         content: Text("Login Successful"));
                                     scaffoldKey.currentState
                                         .showSnackBar(snackBar);
-                                    FlutterSession().set("name", value.name);
+                                    session.set("name", value.name);
+                                    session.set("token", value.token);
+
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -178,7 +194,7 @@ class _State extends State<LoginPage> {
     final form = globalFormKey.currentState;
     //If form is valid then it returns true
     if (form.validate()) {
-      sendlogindata();
+      // sendlogindata();
       return true;
     }
     return false;

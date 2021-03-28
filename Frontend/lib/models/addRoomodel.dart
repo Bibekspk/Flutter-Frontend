@@ -1,21 +1,47 @@
 class AddRoom {
-  String name;
-  String password;
-  String passwordconfirm;
-  String email;
-  String phone;
+  String roomTitle;
+  String description;
+  String address;
+  String price;
+  String roomno;
+  bool parking;
+  bool bathroom;
 
   // String xyz;
   AddRoom(
-      {this.name, this.password, this.passwordconfirm, this.email, this.phone});
+      {this.roomTitle,
+      this.description,
+      this.address,
+      this.price,
+      this.roomno,
+      this.parking,
+      this.bathroom});
   // factory Model.fromJson(Map<String, dynamic> json) => _$ModelFromJson(json);
   Map<String, dynamic> toJson() => _$ModelToJson(this);
 
   _$ModelToJson(AddRoom instance) => <String, dynamic>{
-        'name': instance.name,
-        'password': instance.password,
-        'passwordconfirm': instance.passwordconfirm,
-        'email': instance.email,
-        'phone': instance.phone
+        'roomTitle': instance.roomTitle,
+        'description': instance.description,
+        'address': instance.address,
+        'price': instance.price,
+        'roomno': instance.roomno,
+        'parking': instance.parking,
+        'bathroom': instance.bathroom
       };
+}
+
+class RoomResponseModel {
+  final String roomid;
+  final String token;
+  final String error;
+
+  RoomResponseModel({this.roomid, this.token, this.error});
+
+  factory RoomResponseModel.fromJson(Map<String, dynamic> json) {
+    return RoomResponseModel(
+      roomid: json["roomid"] != null ? json["roomid"] : "",
+      token: json["token"] != null ? json["token"] : "",
+      error: json["message"] != null ? json["message"] : "",
+    );
+  }
 }
