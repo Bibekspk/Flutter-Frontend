@@ -5,10 +5,11 @@ import '../models/addRoomodel.dart';
 import 'package:flutter_session/flutter_session.dart';
 
 class RoomAPIService {
-  Future<RoomResponseModel> login(AddRoom addroommodel) async {
-    String userId = await FlutterSession().get("id");
+  Future<RoomResponseModel> addroom(AddRoom addroommodel) async {
+    int userId = await FlutterSession().get("id");
     String url = "http://10.0.2.2:5000/v1/$userId/room";
     String token = await FlutterSession().get("token");
+    print(userId);
     final response = await http.post(url,
         headers: {
           "Content-type": "application/json",

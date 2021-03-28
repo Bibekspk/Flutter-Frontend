@@ -130,8 +130,8 @@ class _State extends State<LoginPage> {
                               setState(() {
                                 isApiCallProcess = true;
                               });
-                              APIService apiService = new APIService();
-                              apiService.login(requestModel).then((value) {
+                              APIService apiService1 = new APIService();
+                              apiService1.login(requestModel).then((value) {
                                 if (value != null) {
                                   setState(() {
                                     isApiCallProcess = false;
@@ -144,6 +144,7 @@ class _State extends State<LoginPage> {
                                         .showSnackBar(snackBar);
                                     session.set("name", value.name);
                                     session.set("token", value.token);
+                                    session.set("id", value.id);
 
                                     Navigator.push(
                                         context,
@@ -194,7 +195,7 @@ class _State extends State<LoginPage> {
     final form = globalFormKey.currentState;
     //If form is valid then it returns true
     if (form.validate()) {
-      // sendlogindata();
+      sendlogindata();
       return true;
     }
     return false;

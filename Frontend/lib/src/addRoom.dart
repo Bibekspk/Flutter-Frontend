@@ -18,7 +18,7 @@ class Roompage extends StatefulWidget {
 }
 
 class _AddRoomPageState extends State<Roompage> {
-  TextEditingController roomTitle = TextEditingController();
+  TextEditingController roomtitle = TextEditingController();
   TextEditingController description = TextEditingController();
   TextEditingController address = TextEditingController();
   TextEditingController price = TextEditingController();
@@ -128,24 +128,23 @@ class _AddRoomPageState extends State<Roompage> {
                 padding: EdgeInsets.all(10),
                 child: TextFormField(
                   style: TextStyle(fontSize: 19),
-                  controller: roomTitle,
-                  keyboardType: TextInputType.text,
-                  validator: (input) => !(input.length > 3)
-                      ? "Plese provide valid room information"
+                  controller: roomtitle,
+                  validator: (input) => !(input.length > 2)
+                      ? "Plese provide valid room title"
                       : null,
                   decoration: InputDecoration(
-                      labelText: 'Room Title',
-                      labelStyle:
-                          TextStyle(fontSize: 19.0, color: Colors.black),
-                      fillColor: Color(0x00000000),
-                      filled: true,
-                      errorStyle:
-                          TextStyle(fontSize: 19.0, color: Colors.black),
                       enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5))),
                       focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5)),
-                          borderSide: BorderSide(color: Colors.white))),
+                          borderSide: BorderSide(color: Colors.white)),
+                      labelText: 'Room Title',
+                      labelStyle:
+                          TextStyle(fontSize: 19.0, color: Colors.black),
+                      errorStyle:
+                          TextStyle(fontSize: 16.0, color: Colors.white),
+                      fillColor: Color(0x00000000),
+                      filled: true),
                 ),
               ),
               Container(
@@ -153,22 +152,20 @@ class _AddRoomPageState extends State<Roompage> {
                 child: TextFormField(
                   style: TextStyle(fontSize: 19),
                   controller: description,
-                  keyboardType: TextInputType.emailAddress,
                   validator: (input) => !(input.length > 3)
-                      ? "Plese provide valid room information"
+                      ? "Plese provide valid room description"
                       : null,
                   decoration: InputDecoration(
-                      errorStyle:
-                          TextStyle(fontSize: 19.0, color: Colors.black),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(5)),
-                      ),
+                          borderRadius: BorderRadius.all(Radius.circular(5))),
                       focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5)),
                           borderSide: BorderSide(color: Colors.white)),
                       labelText: 'Description',
                       labelStyle:
                           TextStyle(fontSize: 19.0, color: Colors.black),
+                      errorStyle:
+                          TextStyle(fontSize: 16.0, color: Colors.white),
                       fillColor: Color(0x00000000),
                       filled: true),
                 ),
@@ -177,11 +174,10 @@ class _AddRoomPageState extends State<Roompage> {
                 padding: EdgeInsets.all(10),
                 child: TextFormField(
                   style: TextStyle(fontSize: 19),
-                  keyboardType: TextInputType.number,
-                  validator: (input) => !(input.length >= 0)
-                      ? "Plese provide number of room available"
-                      : null,
                   controller: address,
+                  validator: (input) => !(input.length > 2)
+                      ? "Plese provide valid room address"
+                      : null,
                   decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5))),
@@ -191,24 +187,31 @@ class _AddRoomPageState extends State<Roompage> {
                       labelText: 'Address',
                       labelStyle:
                           TextStyle(fontSize: 19.0, color: Colors.black),
+                      errorStyle:
+                          TextStyle(fontSize: 16.0, color: Colors.white),
                       fillColor: Color(0x00000000),
                       filled: true),
                 ),
               ),
               Container(
                 padding: EdgeInsets.all(10),
-                child: TextField(
+                child: TextFormField(
                   style: TextStyle(fontSize: 19),
-                  controller: address,
+                  controller: roomno,
+                  validator: (input) => (input.contains(new RegExp(r'[A-Z]')))
+                      ? "Plese provide valid room number"
+                      : null,
                   decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5))),
                       focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5)),
                           borderSide: BorderSide(color: Colors.white)),
-                      labelText: 'Address',
+                      labelText: 'Number of Rooms',
                       labelStyle:
                           TextStyle(fontSize: 19.0, color: Colors.black),
+                      errorStyle:
+                          TextStyle(fontSize: 16.0, color: Colors.white),
                       fillColor: Color(0x00000000),
                       filled: true),
                 ),
@@ -219,6 +222,9 @@ class _AddRoomPageState extends State<Roompage> {
                   // obscureText: true,
                   style: TextStyle(fontSize: 17.5),
                   controller: price,
+                  validator: (input) => (input.contains(new RegExp(r'[A-Z]')))
+                      ? "Plese provide valid room price"
+                      : null,
                   decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5))),
@@ -228,6 +234,8 @@ class _AddRoomPageState extends State<Roompage> {
                       labelText: 'Price',
                       labelStyle:
                           TextStyle(fontSize: 19.0, color: Colors.black),
+                      errorStyle:
+                          TextStyle(fontSize: 16.0, color: Colors.white),
                       fillColor: Color(0x00000000),
                       filled: true),
                 ),
@@ -365,22 +373,25 @@ class _AddRoomPageState extends State<Roompage> {
                       onPressed: () async {
                         if (validate()) {
                           RoomAPIService apiService = new RoomAPIService();
-                          apiService.login(addroommodel).then((value) {
+                          apiService.addroom(addroommodel).then((value) {
                             if (value != null) {
-                              if (value.token.isNotEmpty) {
-                                session.set("id", value.roomid);
+                              session.set("roomid", value.roomid);
+                              if (value.success) {
                                 sendImg();
+                                print('image');
+
                                 // session.set("token", value.token);
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => HomeScreen()));
+                                // Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //         builder: (context) => HomeScreen()));
                               } else {
                                 print(value.error);
                               }
                             }
                           });
                         }
+                        print(bathroom);
                         print(images);
                       })),
             ]),
@@ -388,9 +399,9 @@ class _AddRoomPageState extends State<Roompage> {
     );
   }
 
-  sendregdata() async {
+  void sendregdata() async {
     addroommodel = AddRoom(
-        roomTitle: roomTitle.text,
+        roomTitle: roomtitle.text,
         description: description.text,
         address: address.text,
         price: price.text,
@@ -403,6 +414,7 @@ class _AddRoomPageState extends State<Roompage> {
     final form = globalFormKey.currentState;
     //If form is valid then it returns true
     if (form.validate()) {
+      sendregdata();
       return true;
     }
     return false;
@@ -434,9 +446,12 @@ class _AddRoomPageState extends State<Roompage> {
             ));
         if (response.statusCode == 200 || response.statusCode == 201) {
           print(response.data);
+          EasyLoading.showSuccess("Successfully added");
         } else {
           return EasyLoading.show(status: 'Could not store in the system!');
         }
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => HomeScreen()));
       }
     } else {
       print("Error occured");

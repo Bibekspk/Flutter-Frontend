@@ -31,16 +31,16 @@ class AddRoom {
 }
 
 class RoomResponseModel {
-  final String roomid;
-  final String token;
+  final int roomid;
+  final bool success;
   final String error;
 
-  RoomResponseModel({this.roomid, this.token, this.error});
+  RoomResponseModel({this.roomid, this.success, this.error});
 
   factory RoomResponseModel.fromJson(Map<String, dynamic> json) {
     return RoomResponseModel(
       roomid: json["roomid"] != null ? json["roomid"] : "",
-      token: json["token"] != null ? json["token"] : "",
+      success: json["success"] != null ? json["success"] : "",
       error: json["message"] != null ? json["message"] : "",
     );
   }
