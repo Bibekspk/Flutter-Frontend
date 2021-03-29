@@ -34,8 +34,8 @@ class _AddRoomPageState extends State<Roompage> {
   GlobalKey<FormState> globalFormKey = new GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  bool parking;
-  bool bathroom;
+  String parking;
+  String bathroom;
 
   Widget buildGridView() {
     return GridView.count(
@@ -129,7 +129,7 @@ class _AddRoomPageState extends State<Roompage> {
                 padding: EdgeInsets.all(10),
                 child: TextFormField(
                   style: TextStyle(fontSize: 19),
-                  controller: address,
+                  controller: roomtitle,
                   validator: (input) => !(input.length > 2)
                       ? "Plese provide valid room title"
                       : null,
@@ -281,7 +281,7 @@ class _AddRoomPageState extends State<Roompage> {
                 child: Row(
                   children: <Widget>[
                     Radio(
-                        value: true,
+                        value: "Available",
                         groupValue: parking,
                         activeColor: Colors.blue,
                         onChanged: (T) {
@@ -298,7 +298,7 @@ class _AddRoomPageState extends State<Roompage> {
                           color: Colors.white),
                     ),
                     Radio(
-                      value: false,
+                      value: 'Unavailable',
                       groupValue: parking,
                       onChanged: (T) {
                         print(T);
@@ -328,7 +328,7 @@ class _AddRoomPageState extends State<Roompage> {
                 child: Row(
                   children: <Widget>[
                     Radio(
-                        value: true,
+                        value: 'Available',
                         groupValue: bathroom,
                         activeColor: Colors.blue,
                         onChanged: (T) {
@@ -336,6 +336,7 @@ class _AddRoomPageState extends State<Roompage> {
                           setState(() {
                             bathroom = T;
                           });
+                          print(bathroom);
                         }),
                     Text(
                       'Available',
@@ -345,7 +346,7 @@ class _AddRoomPageState extends State<Roompage> {
                           color: Colors.white),
                     ),
                     Radio(
-                      value: false,
+                      value: 'Unavailable',
                       groupValue: bathroom,
                       onChanged: (T) {
                         print(T);

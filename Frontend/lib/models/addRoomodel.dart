@@ -4,8 +4,8 @@ class AddRoom {
   String address;
   String price;
   String roomno;
-  bool parking;
-  bool bathroom;
+  String parking;
+  String bathroom;
 
   // String xyz;
   AddRoom(
