@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_login_signup/src/components/progress_HUD.dart';
+// import 'package:flutter_login_signup/src/components/progress_HUD.dart';
 import 'package:flutter_login_signup/src/addRoom.dart';
 import 'package:flutter_session/flutter_session.dart';
 // import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -26,13 +26,13 @@ class _State extends State<LoginPage> {
   GlobalKey<FormState> globalFormKey = new GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  Widget build1(BuildContext context) {
-    return ProgressHUD(
-      child: build(context),
-      inAsyncCall: isApiCallProcess,
-      opacity: 0.3,
-    );
-  }
+  // Widget build1(BuildContext context) {
+  //   return ProgressHUD(
+  //     child: build(context),
+  //     inAsyncCall: isApiCallProcess,
+  //     opacity: 0.3,
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {

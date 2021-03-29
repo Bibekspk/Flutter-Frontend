@@ -14,7 +14,7 @@ class Model {
 }
 
 class LoginResponseModel {
-  final int id;
+  final String id;
   final String name;
   final String token;
   final String error;

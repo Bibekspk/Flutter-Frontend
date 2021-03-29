@@ -378,7 +378,7 @@ class _AddRoomPageState extends State<Roompage> {
                               session.set("roomid", value.roomid);
                               if (value.success) {
                                 sendImg();
-                                print('image');
+                                // print(image);
 
                                 // session.set("token", value.token);
                                 // Navigator.push(
@@ -437,9 +437,14 @@ class _AddRoomPageState extends State<Roompage> {
         EasyLoading.show(status: 'Uploading Image...');
 
         //Image post
-        String token = await FlutterSession()
-            .get("token"); //getting token from flutter session.
-        var response = await dio.post("http://10.0.2.2:5000/v2/multipleuploads",
+
+        //getting token from flutter session.
+        //getting token from flutter session.
+        String token = await FlutterSession().get("token");
+        int userId = await FlutterSession().get("id");
+        int roomId = await FlutterSession().get("roomid");
+        var response = await dio.post(
+            "http://10.0.2.2:5000/v2/$userId/$roomId/multipleuploads",
             data: formData,
             options: Options(
               headers: {"authorization": "$token"},
