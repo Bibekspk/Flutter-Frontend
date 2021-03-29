@@ -40,6 +40,7 @@ class _AddRoomPageState extends State<Roompage> {
   Widget buildGridView() {
     return GridView.count(
       crossAxisCount: 3,
+      crossAxisSpacing: 10,
       children: List.generate(images.length, (index) {
         Asset asset = images[index];
         return AssetThumb(
@@ -128,7 +129,7 @@ class _AddRoomPageState extends State<Roompage> {
                 padding: EdgeInsets.all(10),
                 child: TextFormField(
                   style: TextStyle(fontSize: 19),
-                  controller: roomtitle,
+                  controller: address,
                   validator: (input) => !(input.length > 2)
                       ? "Plese provide valid room title"
                       : null,
@@ -152,7 +153,7 @@ class _AddRoomPageState extends State<Roompage> {
                 child: TextFormField(
                   style: TextStyle(fontSize: 19),
                   controller: description,
-                  validator: (input) => !(input.length > 3)
+                  validator: (input) => !(input.length > 2)
                       ? "Plese provide valid room description"
                       : null,
                   decoration: InputDecoration(
@@ -198,9 +199,11 @@ class _AddRoomPageState extends State<Roompage> {
                 child: TextFormField(
                   style: TextStyle(fontSize: 19),
                   controller: roomno,
-                  validator: (input) => (input.contains(new RegExp(r'[A-Z]')))
-                      ? "Plese provide valid room number"
-                      : null,
+                  keyboardType: TextInputType.number,
+                  validator: (input) =>
+                      (input.isEmpty || input.contains(new RegExp(r'[A-Z]')))
+                          ? "Plese provide valid room number"
+                          : null,
                   decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5))),
@@ -222,7 +225,9 @@ class _AddRoomPageState extends State<Roompage> {
                   // obscureText: true,
                   style: TextStyle(fontSize: 17.5),
                   controller: price,
-                  validator: (input) => (input.contains(new RegExp(r'[A-Z]')))
+                  keyboardType: TextInputType.number,
+                  validator: (input) => (input.isEmpty ||
+                          input.contains(new RegExp(r'[A-Z][a-z]')))
                       ? "Plese provide valid room price"
                       : null,
                   decoration: InputDecoration(
@@ -404,8 +409,8 @@ class _AddRoomPageState extends State<Roompage> {
         roomTitle: roomtitle.text,
         description: description.text,
         address: address.text,
-        price: price.text,
-        roomno: roomno.text,
+        price: int.parse(price.text),
+        roomno: int.parse(roomno.text),
         parking: parking,
         bathroom: bathroom);
   }
