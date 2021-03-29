@@ -200,10 +200,10 @@ class _AddRoomPageState extends State<Roompage> {
                   style: TextStyle(fontSize: 19),
                   controller: roomno,
                   keyboardType: TextInputType.number,
-                  validator: (input) =>
-                      (input.isEmpty || input.contains(new RegExp(r'[A-Z]')))
-                          ? "Plese provide valid room number"
-                          : null,
+                  validator: (input) => (input.isEmpty ||
+                          input.contains(new RegExp('[A-Z][a-z]')))
+                      ? "Plese provide valid room number"
+                      : null,
                   decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5))),
@@ -227,7 +227,7 @@ class _AddRoomPageState extends State<Roompage> {
                   controller: price,
                   keyboardType: TextInputType.number,
                   validator: (input) => (input.isEmpty ||
-                          input.contains(new RegExp(r'[A-Z][a-z]')))
+                          input.contains(new RegExp('[A-Z][a-z]')))
                       ? "Plese provide valid room price"
                       : null,
                   decoration: InputDecoration(
@@ -409,8 +409,8 @@ class _AddRoomPageState extends State<Roompage> {
         roomTitle: roomtitle.text,
         description: description.text,
         address: address.text,
-        price: int.parse(price.text),
-        roomno: int.parse(roomno.text),
+        price: price.text,
+        roomno: roomno.text,
         parking: parking,
         bathroom: bathroom);
   }

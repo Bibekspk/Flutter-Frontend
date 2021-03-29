@@ -2,8 +2,8 @@ class AddRoom {
   String roomTitle;
   String description;
   String address;
-  int price;
-  int roomno;
+  String price;
+  String roomno;
   bool parking;
   bool bathroom;
 
