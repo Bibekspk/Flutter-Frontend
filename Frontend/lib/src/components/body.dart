@@ -9,6 +9,8 @@ class Body extends StatefulWidget {
 }
 
 class _State extends State<Body> {
+  var images = FlutterSession().get('imagename');
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -98,7 +100,24 @@ class _State extends State<Body> {
                 context, MaterialPageRoute(builder: (context) => Roompage()));
           },
         ),
+        Container(
+            alignment: AlignmentDirectional.topStart,
+            child: Image.network(
+                'http://10.0.2.2:5000/static/1617095763881.jpg',
+                width: 380.0,
+                height: 250)),
+        Container(
+            //   child: FutureBuilder(
+            //       future: ,
+            //       builder: (context, snapshot) {
+            //         return Image.network(
+            //             'http://10.0.2.2:5000/v2/getimg//');
+            //       }),
+            ),
+        // )
       ],
     );
+    // 'localhost:5000/v2/getimg/1617095763881.jpg'
+    // http://10.0.2.2:5000/v2/getimg/1617095763881.jpg/
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+// import 'package:flutter_login_signup/api/imgapi.dart';
 // import 'package:flutter_login_signup/src/components/progress_HUD.dart';
 import 'package:flutter_login_signup/src/addRoom.dart';
 import 'package:flutter_session/flutter_session.dart';
@@ -151,6 +152,12 @@ class _State extends State<LoginPage> {
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 HomeScreen()));
+                                    // ImageAPIService imgapi =
+                                    // new ImageAPIService();
+                                    // imgapi.fetchAlbum().then((value) {
+                                    // session.set('imgname', value.imgname);
+                                    // print(value)
+                                    // });
                                   } else {
                                     final snackBar =
                                         SnackBar(content: Text(value.error));
