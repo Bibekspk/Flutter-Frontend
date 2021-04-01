@@ -45,19 +45,3 @@ class RoomResponseModel {
     );
   }
 }
-
-// class ImgResponseModel {
-//   final List<dynamic> imgname;
-//   final bool success;
-//   final String error;
-
-//   ImgResponseModel({this.imgname, this.success, this.error});
-
-//   factory ImgResponseModel.fromJson(Map<String, dynamic> json) {
-//     return ImgResponseModel(
-//       imgname: json["data"] != null ? json["data"] : "",
-//       // success: json["success"] != null ? json["success"] : "",
-//       // error: json["message"] != null ? json["message"] : "",
-//     );
-//   }
-// }

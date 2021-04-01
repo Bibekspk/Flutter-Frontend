@@ -8,8 +8,10 @@
     <application
         android:name="io.flutter.app.FlutterApplication"
         android:label="flutter_login_signup"
+        android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher">
         <activity
+         android:usesCleartextTraffic="true"
             android:name=".MainActivity"
             android:launchMode="singleTop"
             android:theme="@style/LaunchTheme"

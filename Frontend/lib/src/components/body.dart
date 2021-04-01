@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_login_signup/src/addRoom.dart';
 // import 'package:flutter_login_signup/src/addimg.dart';
 import 'package:flutter_session/flutter_session.dart';
+// import 'package:http/http.dart' as http;
+// import 'dart:convert';
+// import 'package:flutter_login_signup/src/components/viewImg.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -100,20 +103,13 @@ class _State extends State<Body> {
                 context, MaterialPageRoute(builder: (context) => Roompage()));
           },
         ),
-        Container(
-            alignment: AlignmentDirectional.topStart,
-            child: Image.network(
-                'http://10.0.2.2:5000/static/1617095763881.jpg',
-                width: 380.0,
-                height: 250)),
-        Container(
-            //   child: FutureBuilder(
-            //       future: ,
-            //       builder: (context, snapshot) {
-            //         return Image.network(
-            //             'http://10.0.2.2:5000/v2/getimg//');
-            //       }),
-            ),
+        // Container(
+        //     alignment: AlignmentDirectional.topStart,
+        //     child: Image.network(
+        //         'http://10.0.2.2:5000/static/1617095763881.jpg',
+        //         width: 380.0,
+        //         height: 250)),
+        // Container(child: Viewimg()),
         // )
       ],
     );
