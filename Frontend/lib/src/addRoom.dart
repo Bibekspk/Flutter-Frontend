@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:io';
+// import 'dart:math';
 import 'package:flutter/material.dart';
-// import 'package:flutter_login_signup/src/addimg.dart';
+// import 'package:flutter_login_signup/config/config.dart';
 import 'package:flutter_login_signup/src/homepage.dart';
 // import 'package:flutter_login_signup/src/welcomePage.dart';
 import 'package:flutter_login_signup/api/addRoomapi.dart';
@@ -10,6 +12,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
 class Roompage extends StatefulWidget {
@@ -27,15 +30,30 @@ class _AddRoomPageState extends State<Roompage> {
   AddRoom addroommodel = AddRoom();
   var session = FlutterSession(); // create session instance
   List<Asset> images = [];
+  // List<Asset> mainimage = [];
+
   Dio dio = Dio();
-  // loading
-  // Timer _timer;
 
   GlobalKey<FormState> globalFormKey = new GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   String parking;
   String bathroom;
+
+  File mainimage;
+  final picker = ImagePicker();
+
+  Future getImage() async {
+    var pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+    setState(() {
+      if (pickedFile != null) {
+        mainimage = File(pickedFile.path);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
 
   Widget buildGridView() {
     return GridView.count(
@@ -52,6 +70,21 @@ class _AddRoomPageState extends State<Roompage> {
     );
   }
 
+  // Widget buildGridView1() {
+  //   return GridView.count(
+  //     crossAxisCount: 3,
+  //     crossAxisSpacing: 10,
+  //     children: List.generate(mainimage.length, (index) {
+  //       Asset asset = mainimage[index];
+  //       return AssetThumb(
+  //         asset: asset,
+  //         width: 300,
+  //         height: 300,
+  //       );
+  //     }),
+  //   );
+  // }
+
   Future<void> loadAssets() async {
     List<Asset> resultList = [];
 
@@ -63,7 +96,7 @@ class _AddRoomPageState extends State<Roompage> {
         cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
         materialOptions: MaterialOptions(
           actionBarColor: "#abcdef",
-          actionBarTitle: "Example App",
+          actionBarTitle: "Select Photos",
           allViewTitle: "All Photos",
           useDetailsView: false,
           selectCircleStrokeColor: "#000000",
@@ -84,19 +117,52 @@ class _AddRoomPageState extends State<Roompage> {
     });
   }
 
-  // @override
-  // void intitState() {
-  //   super.initState();
+  // Future<void> loadoneImg() async {
+  //   List<Asset> oneList = [];
 
-  //   //For easy loading (can be removed mark *)
-  //   EasyLoading.addStatusCallback((status) {
-  //     print('EasyLoading Status $status');
-  //     if (status == EasyLoadingStatus.dismiss) {
-  //       _timer?.cancel();
-  //     }
+  //   try {
+  //     oneList = await MultiImagePicker.pickImages(
+  //       maxImages: 1,
+  //       enableCamera: true,
+  //       selectedAssets: mainimage,
+  //       cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
+  //       materialOptions: MaterialOptions(
+  //         actionBarColor: "#abcdef",
+  //         actionBarTitle: "Select Photos",
+  //         allViewTitle: "All Photos",
+  //         useDetailsView: false,
+  //         selectCircleStrokeColor: "#000000",
+  //       ),
+  //     );
+  //   } on Exception catch (e) {
+  //     print(e.toString());
+  //   }
+
+  //   // If the widget was removed from the tree while the asynchronous platform
+  //   // message was in flight, we want to discard the reply rather than calling
+  //   // setState to update our non-existent appearance.
+  //   if (!mounted) return;
+
+  //   setState(() {
+  //     mainimage = oneList;
+  //     print("main images");
+  //     print(mainimage);
   //   });
-  //   //EasyLoading.showSuccess('Use in initState');
   // }
+
+  // // @override
+  // // void intitState() {
+  // //   super.initState();
+
+  // //   //For easy loading (can be removed mark *)
+  // //   EasyLoading.addStatusCallback((status) {
+  // //     print('EasyLoading Status $status');
+  // //     if (status == EasyLoadingStatus.dismiss) {
+  // //       _timer?.cancel();
+  // //     }
+  // //   });
+  // //   //EasyLoading.showSuccess('Use in initState');
+  // // }
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -130,9 +196,9 @@ class _AddRoomPageState extends State<Roompage> {
                 child: TextFormField(
                   style: TextStyle(fontSize: 19),
                   controller: roomtitle,
-                  validator: (input) => !(input.length > 2)
-                      ? "Plese provide valid room title"
-                      : null,
+                  keyboardType: TextInputType.text,
+                  validator: (input) =>
+                      !(input.length > 2) ? "Plese provide valid title" : null,
                   decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5))),
@@ -153,8 +219,9 @@ class _AddRoomPageState extends State<Roompage> {
                 child: TextFormField(
                   style: TextStyle(fontSize: 19),
                   controller: description,
+                  keyboardType: TextInputType.text,
                   validator: (input) => !(input.length > 2)
-                      ? "Plese provide valid room description"
+                      ? "Plese provide valid description"
                       : null,
                   decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
@@ -176,8 +243,9 @@ class _AddRoomPageState extends State<Roompage> {
                 child: TextFormField(
                   style: TextStyle(fontSize: 19),
                   controller: address,
+                  keyboardType: TextInputType.text,
                   validator: (input) => !(input.length > 2)
-                      ? "Plese provide valid room address"
+                      ? "Plese provide valid address"
                       : null,
                   decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
@@ -200,8 +268,7 @@ class _AddRoomPageState extends State<Roompage> {
                   style: TextStyle(fontSize: 19),
                   controller: roomno,
                   keyboardType: TextInputType.number,
-                  validator: (input) => (input.isEmpty ||
-                          input.contains(new RegExp('[A-Z][a-z]')))
+                  validator: (input) => !(input.length > 2)
                       ? "Plese provide valid room number"
                       : null,
                   decoration: InputDecoration(
@@ -226,7 +293,7 @@ class _AddRoomPageState extends State<Roompage> {
                   style: TextStyle(fontSize: 17.5),
                   controller: price,
                   keyboardType: TextInputType.number,
-                  validator: (input) => (input.isEmpty ||
+                  validator: (input) => (input.isEmpty &&
                           input.contains(new RegExp('[A-Z][a-z]')))
                       ? "Plese provide valid room price"
                       : null,
@@ -248,6 +315,38 @@ class _AddRoomPageState extends State<Roompage> {
               Container(
                   padding: EdgeInsets.all(10),
                   child: Text(
+                    'Select Main Image for Room',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  )),
+              Container(
+                padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                child: IconButton(
+                  alignment: Alignment.topLeft,
+                  focusColor: Colors.blue,
+                  iconSize: 50,
+                  splashColor: Colors.white,
+                  icon: Icon(Icons.add_a_photo, color: Colors.blue, size: 50),
+                  onPressed: () {
+                    // takePhoto(ImageSource.gallery);
+                    // loadoneImg();
+                    getImage();
+                    print(mainimage);
+                    print("main img above ");
+                  },
+                ),
+              ),
+              // SizedBox(height: 1),
+              Container(
+                alignment: Alignment.topLeft,
+                padding: EdgeInsets.fromLTRB(50, 0, 50, 50),
+                // width: 250,
+                child: mainimage == null
+                    ? Text('No image selected.')
+                    : Image.file(mainimage),
+              ),
+              Container(
+                  padding: EdgeInsets.all(10),
+                  child: Text(
                     'Select Images',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                   )),
@@ -262,7 +361,7 @@ class _AddRoomPageState extends State<Roompage> {
                   onPressed: () {
                     // takePhoto(ImageSource.gallery);
                     loadAssets();
-                    print(images);
+                    // print(images);
                   },
                 ),
               ),
@@ -381,24 +480,24 @@ class _AddRoomPageState extends State<Roompage> {
                           RoomAPIService apiService = new RoomAPIService();
                           apiService.addroom(addroommodel).then((value) {
                             if (value != null) {
-                              session.set("roomid", value.roomid);
                               if (value.success) {
+                                session.set("roomid", value.roomid);
+                                singleUpload();
                                 sendImg();
-                                // print(image);
-
-                                // session.set("token", value.token);
-                                // Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //         builder: (context) => HomeScreen()));
                               } else {
-                                print(value.error);
+                                session.set("message", value.error);
+                                print("Error" + value.error);
+                                EasyLoading.showError("Please provide values");
                               }
                             }
                           });
+                        } else {
+                          EasyLoading.showError(
+                              'Please provide all the values');
                         }
                         print(bathroom);
-                        print(images);
+                        print("main imageafter");
+                        print(mainimage);
                       })),
             ]),
           )),
@@ -426,46 +525,80 @@ class _AddRoomPageState extends State<Roompage> {
     return false;
   }
 
+  Future singleUpload() async {
+    String filename = mainimage.path.split('/').last;
+    try {
+      FormData formData = new FormData.fromMap({
+        "image": await MultipartFile.fromFile(mainimage.path,
+            filename: filename, contentType: new MediaType('image', 'png')),
+      });
+      int roomId = await FlutterSession().get("roomid");
+      String token = await FlutterSession().get("token");
+      // Dio dio = new Dio();
+      var response =
+          await dio.post("http://10.0.2.2:5000/v2/singleupload/$roomId",
+              data: formData,
+              options: Options(
+                headers: {"authorization": "$token"},
+              ));
+      if (response.statusCode == 200) {
+        EasyLoading.showSuccess('Room Thumbnail is sucessfully Stored!');
+        print(response.data);
+      } else {
+        print("error");
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   sendImg() async {
-    if (images != null) {
-      // int i = 0;
-      for (var i = 0; i < images.length; i++) {
-        ByteData byteData = await images[i].getByteData();
-        List<int> imageData = byteData.buffer.asUint8List();
+    if (validate()) {
+      if (images != null) {
+        // int i = 0;
+        for (var i = 0; i < images.length; i++) {
+          ByteData byteData = await images[i].getByteData();
+          List<int> imageData = byteData.buffer.asUint8List();
 
-        MultipartFile multipartFile = MultipartFile.fromBytes(
-          imageData,
-          filename: images[i].name,
-          contentType: MediaType('image', 'jpg'),
-        );
+          MultipartFile multipartFile = MultipartFile.fromBytes(
+            imageData,
+            filename: images[i].name,
+            contentType: MediaType('image', 'jpg'),
+          );
 
-        FormData formData = FormData.fromMap({"image": multipartFile});
-        EasyLoading.show(status: 'Uploading Image...');
+          FormData formData = FormData.fromMap({"image": multipartFile});
+          // EasyLoading.show(status: 'Uploading Image...');
 
-        //Image post
+          //Image post
 
-        //getting token from flutter session.
-        //getting token from flutter session.
-        String token = await FlutterSession().get("token");
-        int userId = await FlutterSession().get("id");
-        int roomId = await FlutterSession().get("roomid");
-        var response = await dio.post(
-            "http://10.0.2.2:5000/v2/$userId/$roomId/multipleuploads",
-            data: formData,
-            options: Options(
-              headers: {"authorization": "$token"},
-            ));
-        if (response.statusCode == 200 || response.statusCode == 201) {
-          print(response.data);
-          EasyLoading.showSuccess("Successfully added");
-        } else {
-          return EasyLoading.show(status: 'Could not store in the system!');
+          //getting token from flutter session.
+          //getting token from flutter session.
+          String token = await FlutterSession().get("token");
+          int userId = await FlutterSession().get("id");
+          int roomId = await FlutterSession().get("roomid");
+          // int roomid = int.parse(roomId);
+          Dio dio = new Dio();
+          var response = await dio.post(
+              "http://10.0.2.2:5000/v2/$userId/$roomId/multipleuploads",
+              data: formData,
+              options: Options(
+                headers: {"authorization": "$token"},
+              ));
+          if (response.statusCode == 200 || response.statusCode == 201) {
+            print(response.data);
+            EasyLoading.showSuccess("Successfully added");
+          } else {
+            return EasyLoading.show(status: 'Could not store in the system!');
+          }
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => HomeScreen()));
         }
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => HomeScreen()));
+      } else {
+        print("Error occured");
       }
     } else {
-      print("Error occured");
+      String message = await FlutterSession().get("error");
+      EasyLoading.showError(message);
     }
   }
 }

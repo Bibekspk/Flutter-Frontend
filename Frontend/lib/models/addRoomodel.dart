@@ -31,7 +31,7 @@ class AddRoom {
 }
 
 class RoomResponseModel {
-  final int roomid;
+  final String roomid;
   final bool success;
   final String error;
 
