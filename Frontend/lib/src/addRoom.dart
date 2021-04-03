@@ -1,10 +1,7 @@
 import 'dart:async';
 import 'dart:io';
-// import 'dart:math';
 import 'package:flutter/material.dart';
-// import 'package:flutter_login_signup/config/config.dart';
 import 'package:flutter_login_signup/src/homepage.dart';
-// import 'package:flutter_login_signup/src/welcomePage.dart';
 import 'package:flutter_login_signup/api/addRoomapi.dart';
 import 'package:flutter_login_signup/models/addRoomodel.dart';
 import 'package:flutter_session/flutter_session.dart';
