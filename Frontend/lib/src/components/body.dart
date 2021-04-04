@@ -130,7 +130,7 @@ class _State extends State<Body> {
                             title: Container(
                               width: 100,
                               height: 100,
-                              child: Image.network(list[index]['thumb_Img']),
+                              child: Image.network(list[index].thumb_Img),
                             ),
                             subtitle: Center(child: Text(list[index]['name'])),
                           ),
