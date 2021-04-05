@@ -1,25 +1,41 @@
+// To parse this JSON data, do
+//
+//     final property = propertyFromJson(jsonString);
+
+import 'dart:convert';
+
+RoomData roomFromJson(String str) => RoomData.fromJson(json.decode(str));
+
+String roomToJson(RoomData data) => json.encode(data.toJson());
+
 class RoomData {
   List<Data> data;
 
   RoomData({this.data});
+  factory RoomData.fromJson(Map<String, dynamic> json) => RoomData(
+        data: List<Data>.from(json["data"].map((x) => Data.fromJson(x))),
+      );
 
-  RoomData.fromJson(Map<String, dynamic> json) {
-    if (json['data'] != null) {
-      data = new List<Data>();
-      json['data'].forEach((v) {
-        data.add(new Data.fromJson(v));
-      });
-    }
-  }
+  Map<String, dynamic> toJson() => {
+        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+      };
+  // RoomData.fromJson(Map<String, dynamic> json) {
+  //   if (json['data'] != null) {
+  //     data = new List<Data>();
+  //     json['data'].forEach((v) {
+  //       data.add(new Data.fromJson(v));
+  //     });
+  //   }
+  // }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.data != null) {
-      data['data'] = this.data.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
+  // Map<String, dynamic> toJson() {
+  //   final Map<String, dynamic> data = new Map<String, dynamic>();
+  //   if (this.data != null) {
+  //     data['data'] = this.data.map((v) => v.toJson()).toList();
+  //   }
+  //   return data;
 }
+// }
 
 class Data {
   int roomId;

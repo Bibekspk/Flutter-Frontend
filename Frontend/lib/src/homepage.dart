@@ -2,7 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login_signup/src/addRoom.dart';
 import 'package:flutter_login_signup/src/components/body.dart';
-import 'package:flutter_login_signup/src/components/viewImg.dart';
+import 'package:flutter_login_signup/src/components/rrom_carosuel.dart';
+// import 'package:flutter_login_signup/src/components/viewImg.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -39,8 +40,10 @@ class HomeScreen extends StatelessWidget {
                 icon: IconButton(
                     icon: Icon(Icons.add_circle_outline),
                     onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Viewimg()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PropertyCarousel()));
                     }),
                 label: ''),
           ]),
