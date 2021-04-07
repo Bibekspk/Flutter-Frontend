@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login_signup/models/RoomData.dart';
+import 'package:flutter_login_signup/src/components/Roomdetailed.dart';
 import 'package:flutter_session/flutter_session.dart';
 // import 'package:propertyfinder/api/api_get.dart';
 import 'package:flutter_login_signup/api/getRoom.dart';
@@ -74,7 +75,7 @@ class _PropertyCarouselState extends State<PropertyCarousel> {
           ),
         ),
         Container(
-          height: 330,
+          height: 410,
           // color: Colors.grey,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
@@ -84,23 +85,27 @@ class _PropertyCarouselState extends State<PropertyCarousel> {
               // RoomData roomList = roomlist[index];
               return GestureDetector(
                 onTap: () {
+                  Navigator.push(
+                      context,
+                      // MaterialPageRoute(
+                      //     builder: (context) => PropertyListsView(property: property)));
+                      MaterialPageRoute(
+                          builder: (context) => PropertyListsView(room: room)));
                   print("Tap");
                   session.set("property_id", room.roomId);
                   session.set("user_id", room.userId);
                   print("Property_ID ==>" + room.roomId.toString());
                   print("User ==> " + room.userId.toString());
                 },
-                child: Container(
+                child: Card(
                   margin: EdgeInsets.all(10),
-                  width: 300,
-                  // color: Colors.blueGrey[600],
                   child: Stack(
                     alignment: Alignment.topCenter,
                     children: <Widget>[
                       Positioned(
                         bottom: 0,
                         child: Container(
-                          height: 148,
+                          height: 280,
                           width: 300,
                           decoration: BoxDecoration(
                             color: Colors.white,
@@ -119,16 +124,25 @@ class _PropertyCarouselState extends State<PropertyCarousel> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: <Widget>[
-                                Text(
-                                  room.roomTitle,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
+                                Row(children: <Widget>[
+                                  Icon(
+                                    Icons.home_filled,
+                                    color: Colors.black,
+                                    size: 25,
                                   ),
-                                ),
+                                  Text(
+                                    room.roomTitle,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ]),
+
                                 SizedBox(
-                                  height: 2,
-                                ),
+                                    height: 2,
+                                    child: Divider(color: Colors.black)),
+
                                 Text(
                                   "Rs." + room.price.toString(),
                                   style: TextStyle(
@@ -137,13 +151,13 @@ class _PropertyCarouselState extends State<PropertyCarousel> {
                                   ),
                                 ),
                                 SizedBox(
-                                  height: 2,
+                                  height: 5,
                                 ),
                                 Text(
                                   room.address,
                                   style: TextStyle(
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
                                   ),
                                 ),
                                 // Text(
@@ -158,13 +172,13 @@ class _PropertyCarouselState extends State<PropertyCarousel> {
                                     Icon(
                                       Icons.bathtub,
                                       color: Colors.black,
-                                      size: 20,
+                                      size: 25,
                                     ),
                                     SizedBox(
                                       width: 10,
                                     ),
                                     Text(
-                                      "12",
+                                      room.bathroom,
                                       style: TextStyle(
                                         fontSize: 16,
                                       ),
@@ -173,12 +187,12 @@ class _PropertyCarouselState extends State<PropertyCarousel> {
                                       width: 5,
                                     ),
                                     Icon(
-                                      Icons.house,
+                                      Icons.local_parking,
                                       color: Colors.black,
-                                      size: 20,
+                                      size: 25,
                                     ),
                                     Text(
-                                      "12",
+                                      room.parking,
                                       style: TextStyle(
                                         fontSize: 16,
                                       ),
@@ -186,30 +200,43 @@ class _PropertyCarouselState extends State<PropertyCarousel> {
                                     SizedBox(
                                       width: 10,
                                     ),
+                                  ],
+                                ),
+                                SizedBox(
+                                    height: 30,
+                                    child: Divider(color: Colors.black)),
+                                Row(
+                                  children: [
                                     Icon(
-                                      Icons.house,
+                                      Icons.bathtub,
                                       color: Colors.black,
-                                      size: 20,
+                                      size: 25,
+                                    ),
+                                    SizedBox(
+                                      width: 10,
                                     ),
                                     Text(
-                                      "12",
+                                      room.bathroom,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Icon(
+                                      Icons.local_parking,
+                                      color: Colors.black,
+                                      size: 25,
+                                    ),
+                                    Text(
+                                      room.parking,
                                       style: TextStyle(
                                         fontSize: 16,
                                       ),
                                     ),
                                     SizedBox(
                                       width: 10,
-                                    ),
-                                    Icon(
-                                      Icons.car_rental,
-                                      color: Colors.black,
-                                      size: 20,
-                                    ),
-                                    Text(
-                                      "12",
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                      ),
                                     ),
                                   ],
                                 )
@@ -246,13 +273,6 @@ class _PropertyCarouselState extends State<PropertyCarousel> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  Text(
-                                    room.parking,
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20),
-                                  ),
                                   Text(
                                     room.description,
                                     style: TextStyle(color: Colors.white),

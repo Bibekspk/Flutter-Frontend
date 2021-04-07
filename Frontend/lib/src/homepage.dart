@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login_signup/src/addRoom.dart';
 import 'package:flutter_login_signup/src/components/body.dart';
-import 'package:flutter_login_signup/src/components/rrom_carosuel.dart';
+import 'package:flutter_login_signup/src/components/room_carosuel.dart';
 // import 'package:flutter_login_signup/src/components/viewImg.dart';
 
 class HomeScreen extends StatelessWidget {
