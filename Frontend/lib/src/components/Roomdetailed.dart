@@ -46,54 +46,56 @@ class _PropertyListsViewState extends State<PropertyListsView> {
           vertical: 10,
         ),
         width: screenWidth.width,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              width: 150,
-              child: FloatingActionButton.extended(
-                heroTag: "btn1",
-                onPressed: () {
-                  print("Button call has been pressed");
-                },
-                backgroundColor: Colors.grey[800],
-                label: Text('Call'),
-                icon: Icon(
-                  Icons.phone,
-                  color: Colors.green,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(4.0),
+        child: SingleChildScrollView(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: 150,
+                child: FloatingActionButton.extended(
+                  heroTag: "btn1",
+                  onPressed: () {
+                    print("Button call has been pressed");
+                  },
+                  backgroundColor: Colors.black,
+                  label: Text('Call'),
+                  icon: Icon(
+                    Icons.phone,
+                    color: Colors.green,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(4.0),
+                    ),
                   ),
                 ),
               ),
-            ),
-            SizedBox(
-              width: 20,
-            ),
-            Container(
-              width: 150,
-              child: FloatingActionButton.extended(
-                heroTag: "btn2",
-                onPressed: () {
-                  print("Button call has been pressed");
-                },
-                backgroundColor: Colors.grey[800],
-                label: Text('Message'),
-                icon: Icon(
-                  Icons.message,
-                  color: Colors.red.shade600,
-                ),
-                hoverColor: Colors.amber,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(4.0),
+              SizedBox(
+                width: 20,
+              ),
+              Container(
+                width: 150,
+                child: FloatingActionButton.extended(
+                  heroTag: "btn2",
+                  onPressed: () {
+                    print("Button call has been pressed");
+                  },
+                  backgroundColor: Colors.black,
+                  label: Text('Site Visit'),
+                  icon: Icon(
+                    Icons.visibility_sharp,
+                    color: Colors.blue,
+                  ),
+                  hoverColor: Colors.amber,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(4.0),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       body: SingleChildScrollView(
@@ -107,7 +109,7 @@ class _PropertyListsViewState extends State<PropertyListsView> {
                   Hero(
                     tag: widget.room,
                     child: Container(
-                      height: size.height * 0.42,
+                      height: size.height * 0.40,
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           image: NetworkImage(widget.room.thumbImg),
@@ -132,14 +134,14 @@ class _PropertyListsViewState extends State<PropertyListsView> {
                   //For property Details of the Specific property
                   //
                   Container(
-                    height: size.height * 0.38,
+                    height: size.height * 0.30,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
                           padding: const EdgeInsets.symmetric(
-                            horizontal: 24,
-                            vertical: 32,
+                            horizontal: 15,
+                            vertical: 15,
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -187,18 +189,19 @@ class _PropertyListsViewState extends State<PropertyListsView> {
                         //   ),
                         // ),
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 24),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 21, vertical: 20),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                widget.room.roomTitle,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
+                              // Text(
+                              //   widget.room.roomTitle,
+                              //   style: TextStyle(
+                              //     color: Colors.white,
+                              //     fontSize: 18,
+                              //     fontWeight: FontWeight.w600,
+                              //   ),
+                              // ),
                               Container(
                                 height: 50,
                                 width: 50,
@@ -222,52 +225,52 @@ class _PropertyListsViewState extends State<PropertyListsView> {
                             ],
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: 14, right: 24, top: 0, bottom: 0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  // Icon(
-                                  //   Icons.directions,
-                                  //   color: Colors.white,
-                                  //   size: 28,
-                                  // ),
-                                  // SizedBox(
-                                  //   width: 4,
-                                  // ),
-                                  // Text(
-                                  //   "North",
-                                  //   style: TextStyle(
-                                  //     color: Colors.white,
-                                  //     fontSize: 15,
-                                  //   ),
-                                  // ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Icon(
-                                    Icons.aspect_ratio,
-                                    color: Colors.white,
-                                    size: 28,
-                                  ),
-                                  SizedBox(
-                                    width: 4,
-                                  ),
-                                  Text(
-                                    widget.room.address,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
+                        // Padding(
+                        //   padding: EdgeInsets.only(
+                        //       left: 14, right: 24, top: 0, bottom: 0),
+                        //   child: Row(
+                        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //     children: [
+                        //       Row(
+                        //         children: [
+                        //           // Icon(
+                        //           //   Icons.directions,
+                        //           //   color: Colors.white,
+                        //           //   size: 28,
+                        //           // ),
+                        //           // SizedBox(
+                        //           //   width: 4,
+                        //           // ),
+                        //           // Text(
+                        //           //   "North",
+                        //           //   style: TextStyle(
+                        //           //     color: Colors.white,
+                        //           //     fontSize: 15,
+                        //           //   ),
+                        //           // ),
+                        //           SizedBox(
+                        //             width: 10,
+                        //           ),
+                        //           Icon(
+                        //             Icons.aspect_ratio,
+                        //             color: Colors.white,
+                        //             size: 28,
+                        //           ),
+                        //           SizedBox(
+                        //             width: 4,
+                        //           ),
+                        //           Text(
+                        //             widget.room.address,
+                        //             style: TextStyle(
+                        //               color: Colors.white,
+                        //               fontSize: 15,
+                        //             ),
+                        //           ),
+                        //         ],
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
@@ -287,144 +290,224 @@ class _PropertyListsViewState extends State<PropertyListsView> {
                   // ),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    top: 10.0, right: 16.0, left: 16.0, bottom: 16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                // margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      "Property Description: ",
-                                      style: TextStyle(fontSize: 18),
-                                    ),
-                                    Text.rich(
-                                      TextSpan(
-                                        text: (widget.room.description),
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold),
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      top: 10.0, right: 18.0, left: 18.0, bottom: 16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  // margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        height: 27,
+                                        decoration: BoxDecoration(
+                                          color: Colors.blueGrey[600],
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5)),
+                                        ),
+                                        child: Text(
+                                          " Room ",
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold),
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                      // SizedBox(
+                                      //   height: 10,
+                                      // ),
+                                      Divider(color: Colors.black),
+                                      Text.rich(
+                                        TextSpan(
+                                          text: (widget.room.roomTitle),
+                                          style: TextStyle(
+                                              fontSize: 23,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-
-                              // Container(
-                              //   decoration: BoxDecoration(
-                              //     color: Colors.blueGrey[600],
-                              //     borderRadius:
-                              //         BorderRadius.all(Radius.circular(5)),
-                              //   ),
-                              //   child: Padding(
-                              //     padding: const EdgeInsets.all(5.0),
-                              //     child: Text(
-                              //       "Room Description",
-                              //       style: TextStyle(
-                              //         color: Colors.white,
-                              //         fontWeight: FontWeight.bold,
-                              //       ),
-                              //     ),
-                              //   ),
-                              // ),
-
-                              // SizedBox(width: 10),
-                              // Text(
-                              //   "|\t" + widget.room.description,
-                              //   style: TextStyle(fontWeight: FontWeight.bold),
-                              // ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Text.rich(
-                            TextSpan(
-                              text: ("Number of Rooms : " +
-                                  widget.room.roomno.toString()),
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
+                              ],
                             ),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.location_on,
-                                size: 18,
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.location_on,
+                                  size: 18,
+                                ),
+                                SizedBox(
+                                  width: 6,
+                                ),
+                                Text.rich(
+                                  TextSpan(
+                                    text: widget.room.address,
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              "Rs.\t" + widget.room.price,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 21,
+                                  color: Colors.black),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Divider(color: Colors.black),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        width: size.width,
+                        margin: EdgeInsets.fromLTRB(0, 0, 0, 80),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              height: 27,
+                              decoration: BoxDecoration(
+                                color: Colors.blueGrey[600],
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(5)),
                               ),
-                              SizedBox(
-                                width: 6,
+                              child: Text(
+                                " Room Overview ",
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold),
                               ),
-                              Text.rich(
-                                TextSpan(
-                                  text: widget.room.address,
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.roofing_outlined,
+                                  size: 18,
+                                ),
+                                Text(
+                                  "Number of Rooms : ",
                                   style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w400),
+                                      fontSize: 19,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                  width: 6,
+                                ),
+                                Text.rich(
+                                  TextSpan(
+                                    text: widget.room.roomno.toString(),
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.local_parking_rounded,
+                                  size: 18,
+                                ),
+                                Text(
+                                  "Parking : ",
+                                  style: TextStyle(
+                                      fontSize: 19,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text.rich(
+                                  TextSpan(
+                                    text: widget.room.parking,
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.bathtub,
+                                  size: 18,
+                                ),
+                                SizedBox(
+                                  width: 6,
+                                ),
+                                Text(
+                                  "Bathroom : ",
+                                  style: TextStyle(
+                                      fontSize: 19,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text.rich(
+                                  TextSpan(
+                                    text: widget.room.parking,
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Divider(color: Colors.black),
+                            Container(
+                              height: 30,
+                              margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                              decoration: BoxDecoration(
+                                color: Colors.blueGrey[600],
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(5)),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Text(
+                                  "Room Description",
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 19),
                                 ),
                               ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            "Rs.\t" + widget.room.price,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 21,
-                                color: Colors.black),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Divider(color: Colors.black),
-                        ],
+                            ),
+                            // SizedBox(width: 10),
+                            Text(
+                              widget.room.description,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 18),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    // Container(
-                    //   width: size.width,
-                    //   child: Column(
-                    //     crossAxisAlignment: CrossAxisAlignment.start,
-                    //     children: [
-                    //       Center(
-                    //         child: Text(
-                    //           "Property Overview: ",
-                    //           style: TextStyle(fontSize: 18),
-                    //         ),
-                    //       ),
-                    //       SizedBox(
-                    //         height: 8,
-                    //       ),
-                    //       Container(
-                    //         child: (widget.room.propertyType == "Land"
-                    //             ? Column(
-                    //                 children: [
-                    //                   Text("This is Buildings"),
-                    //                 ],
-                    //               )
-                    //             : Column(
-                    //                 children: [
-                    //                   Text("This is Building/Apartments/House"),
-                    //                 ],
-                    //               )),
-                    //       ),
-                    //     ],
-                    // ),
-                    // ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ],
