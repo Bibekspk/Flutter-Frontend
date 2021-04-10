@@ -1,601 +1,323 @@
-import 'dart:async';
-import 'dart:io';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:flutter_login_signup/src/homepage.dart';
-import 'package:flutter_login_signup/api/addRoomapi.dart';
-import 'package:flutter_login_signup/models/addRoomodel.dart';
-import 'package:flutter_session/flutter_session.dart';
-import 'package:dio/dio.dart';
-import 'package:flutter/services.dart';
-import 'package:http_parser/http_parser.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:flutter_login_signup/models/InspectionModel.dart';
+// import 'package:propertyfinder/config/config.dart';
+import 'package:date_time_picker/date_time_picker.dart';
 
 class SiteRequest extends StatefulWidget {
   @override
-  _AddRoomPageState createState() => _AddRoomPageState();
+  _RequestInspectionState createState() => _RequestInspectionState();
 }
 
-class _AddRoomPageState extends State<SiteRequest> {
-  TextEditingController roomtitle = TextEditingController();
-  TextEditingController description = TextEditingController();
-  TextEditingController address = TextEditingController();
-  TextEditingController price = TextEditingController();
-  TextEditingController roomno = TextEditingController();
-
-  AddRoom addroommodel = AddRoom();
-  var session = FlutterSession(); // create session instance
-  List<Asset> images = [];
-  // List<Asset> mainimage = [];
-
-  Dio dio = Dio();
+class _RequestInspectionState extends State<SiteRequest> {
+  // var selectedRange = RangeValues(300, 1000);
+  // String chosenValue;
+  bool sitevisit = false;
+  bool roomPrice = false;
+  String date;
+  TextEditingController username = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController phone = TextEditingController();
+  TextEditingController inquiry = TextEditingController();
 
   GlobalKey<FormState> globalFormKey = new GlobalKey<FormState>();
-  final scaffoldKey = GlobalKey<ScaffoldState>();
+  Inspection siteRequest = Inspection();
 
-  String parking;
-  String bathroom;
-
-  File mainimage;
-  final picker = ImagePicker();
-
-  Future getImage() async {
-    var pickedFile = await picker.getImage(source: ImageSource.gallery);
-
-    setState(() {
-      if (pickedFile != null) {
-        mainimage = File(pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
-    });
-  }
-
-  Widget buildGridView() {
-    return GridView.count(
-      crossAxisCount: 3,
-      crossAxisSpacing: 10,
-      children: List.generate(images.length, (index) {
-        Asset asset = images[index];
-        return AssetThumb(
-          asset: asset,
-          width: 300,
-          height: 300,
-        );
-      }),
-    );
-  }
-
-  // Widget buildGridView1() {
-  //   return GridView.count(
-  //     crossAxisCount: 3,
-  //     crossAxisSpacing: 10,
-  //     children: List.generate(mainimage.length, (index) {
-  //       Asset asset = mainimage[index];
-  //       return AssetThumb(
-  //         asset: asset,
-  //         width: 300,
-  //         height: 300,
-  //       );
-  //     }),
-  //   );
-  // }
-
-  Future<void> loadAssets() async {
-    List<Asset> resultList = [];
-
-    try {
-      resultList = await MultiImagePicker.pickImages(
-        maxImages: 5,
-        enableCamera: true,
-        selectedAssets: images,
-        cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
-        materialOptions: MaterialOptions(
-          actionBarColor: "#abcdef",
-          actionBarTitle: "Select Photos",
-          allViewTitle: "All Photos",
-          useDetailsView: false,
-          selectCircleStrokeColor: "#000000",
-        ),
-      );
-    } on Exception catch (e) {
-      print(e.toString());
-    }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    setState(() {
-      images = resultList;
-      print(images);
-    });
-  }
-
-  // Future<void> loadoneImg() async {
-  //   List<Asset> oneList = [];
-
-  //   try {
-  //     oneList = await MultiImagePicker.pickImages(
-  //       maxImages: 1,
-  //       enableCamera: true,
-  //       selectedAssets: mainimage,
-  //       cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
-  //       materialOptions: MaterialOptions(
-  //         actionBarColor: "#abcdef",
-  //         actionBarTitle: "Select Photos",
-  //         allViewTitle: "All Photos",
-  //         useDetailsView: false,
-  //         selectCircleStrokeColor: "#000000",
-  //       ),
-  //     );
-  //   } on Exception catch (e) {
-  //     print(e.toString());
-  //   }
-
-  //   // If the widget was removed from the tree while the asynchronous platform
-  //   // message was in flight, we want to discard the reply rather than calling
-  //   // setState to update our non-existent appearance.
-  //   if (!mounted) return;
-
-  //   setState(() {
-  //     mainimage = oneList;
-  //     print("main images");
-  //     print(mainimage);
-  //   });
-  // }
-
-  // // @override
-  // // void intitState() {
-  // //   super.initState();
-
-  // //   //For easy loading (can be removed mark *)
-  // //   EasyLoading.addStatusCallback((status) {
-  // //     print('EasyLoading Status $status');
-  // //     if (status == EasyLoadingStatus.dismiss) {
-  // //       _timer?.cancel();
-  // //     }
-  // //   });
-  // //   //EasyLoading.showSuccess('Use in initState');
-  // // }
-
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: scaffoldKey,
-      appBar: AppBar(backgroundColor: Color.fromRGBO(13, 71, 161, 1)),
-      body: Form(
-          key: globalFormKey,
-          child: Container(
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                  Color.fromRGBO(245, 124, 0, 1),
-                  Color.fromRGBO(13, 71, 161, 1)
-                ])),
-            child: ListView(children: <Widget>[
-              Image.asset(
-                'assets/logo.PNG',
-                height: 105,
-              ),
-              Container(
-                  alignment: Alignment.center,
-                  padding: EdgeInsets.all(10),
-                  child: Text(
-                    'ADD ROOM',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-                  )),
-              Container(
-                padding: EdgeInsets.all(10),
-                child: TextFormField(
-                  style: TextStyle(fontSize: 19),
-                  controller: roomtitle,
-                  keyboardType: TextInputType.text,
-                  validator: (input) =>
-                      !(input.length > 2) ? "Plese provide valid title" : null,
-                  decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(5))),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(5)),
-                          borderSide: BorderSide(color: Colors.white)),
-                      labelText: 'Room Title',
-                      labelStyle:
-                          TextStyle(fontSize: 19.0, color: Colors.black),
-                      errorStyle:
-                          TextStyle(fontSize: 16.0, color: Colors.white),
-                      fillColor: Color(0x00000000),
-                      filled: true),
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.all(10),
-                child: TextFormField(
-                  style: TextStyle(fontSize: 19),
-                  controller: description,
-                  keyboardType: TextInputType.text,
-                  validator: (input) => !(input.length > 2)
-                      ? "Plese provide valid description"
-                      : null,
-                  decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(5))),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(5)),
-                          borderSide: BorderSide(color: Colors.white)),
-                      labelText: 'Description',
-                      labelStyle:
-                          TextStyle(fontSize: 19.0, color: Colors.black),
-                      errorStyle:
-                          TextStyle(fontSize: 16.0, color: Colors.white),
-                      fillColor: Color(0x00000000),
-                      filled: true),
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.all(10),
-                child: TextFormField(
-                  style: TextStyle(fontSize: 19),
-                  controller: address,
-                  keyboardType: TextInputType.text,
-                  validator: (input) => !(input.length > 2)
-                      ? "Plese provide valid address"
-                      : null,
-                  decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(5))),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(5)),
-                          borderSide: BorderSide(color: Colors.white)),
-                      labelText: 'Address',
-                      labelStyle:
-                          TextStyle(fontSize: 19.0, color: Colors.black),
-                      errorStyle:
-                          TextStyle(fontSize: 16.0, color: Colors.white),
-                      fillColor: Color(0x00000000),
-                      filled: true),
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.all(10),
-                child: TextFormField(
-                  style: TextStyle(fontSize: 19),
-                  controller: roomno,
-                  keyboardType: TextInputType.number,
-                  validator: (input) => !(input.length > 2)
-                      ? "Plese provide valid room number"
-                      : null,
-                  decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(5))),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(5)),
-                          borderSide: BorderSide(color: Colors.white)),
-                      labelText: 'Number of Rooms',
-                      labelStyle:
-                          TextStyle(fontSize: 19.0, color: Colors.black),
-                      errorStyle:
-                          TextStyle(fontSize: 16.0, color: Colors.white),
-                      fillColor: Color(0x00000000),
-                      filled: true),
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.all(10),
-                child: TextFormField(
-                  // obscureText: true,
-                  style: TextStyle(fontSize: 17.5),
-                  controller: price,
-                  keyboardType: TextInputType.number,
-                  validator: (input) => (input.isEmpty &&
-                          input.contains(new RegExp('[A-Z][a-z]')))
-                      ? "Plese provide valid room price"
-                      : null,
-                  decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(5))),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(5)),
-                          borderSide: BorderSide(color: Colors.white)),
-                      labelText: 'Price',
-                      labelStyle:
-                          TextStyle(fontSize: 19.0, color: Colors.black),
-                      errorStyle:
-                          TextStyle(fontSize: 16.0, color: Colors.white),
-                      fillColor: Color(0x00000000),
-                      filled: true),
-                ),
-              ),
-              Container(
-                  padding: EdgeInsets.all(10),
-                  child: Text(
-                    'Select Main Image for Room',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                  )),
-              Container(
-                padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                child: IconButton(
-                  alignment: Alignment.topLeft,
-                  focusColor: Colors.blue,
-                  iconSize: 50,
-                  splashColor: Colors.white,
-                  icon: Icon(Icons.add_a_photo, color: Colors.blue, size: 50),
-                  onPressed: () {
-                    // takePhoto(ImageSource.gallery);
-                    // loadoneImg();
-                    getImage();
-                    print(mainimage);
-                    print("main img above ");
-                  },
-                ),
-              ),
-              // SizedBox(height: 1),
-              Container(
-                alignment: Alignment.topLeft,
-                padding: EdgeInsets.fromLTRB(50, 0, 50, 50),
-                // width: 250,
-                child: mainimage == null
-                    ? Text('No image selected.')
-                    : Image.file(mainimage),
-              ),
-              Container(
-                  padding: EdgeInsets.all(10),
-                  child: Text(
-                    'Select Images',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                  )),
-              Container(
-                padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                child: IconButton(
-                  alignment: Alignment.topLeft,
-                  focusColor: Colors.blue,
-                  iconSize: 50,
-                  splashColor: Colors.white,
-                  icon: Icon(Icons.add_a_photo, color: Colors.blue, size: 50),
-                  onPressed: () {
-                    // takePhoto(ImageSource.gallery);
-                    loadAssets();
-                    // print(images);
-                  },
-                ),
-              ),
-              Container(
-                height: 150,
-                child: buildGridView(),
-              ),
-              Container(
-                  padding: EdgeInsets.all(10),
-                  child: Text(
-                    'Parking',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                  )),
-              Container(
-                margin: EdgeInsets.fromLTRB(15, 0, 0, 0),
-                child: Row(
-                  children: <Widget>[
-                    Radio(
-                        value: "Available",
-                        groupValue: parking,
-                        activeColor: Colors.blue,
-                        onChanged: (T) {
-                          print(T);
-                          setState(() {
-                            parking = T;
-                          });
-                        }),
-                    Text(
-                      'Available',
-                      style: TextStyle(
-                          fontWeight: FontWeight.normal,
-                          fontSize: 20,
-                          color: Colors.white),
-                    ),
-                    Radio(
-                      value: 'Unavailable',
-                      groupValue: parking,
-                      onChanged: (T) {
-                        print(T);
-                        setState(() {
-                          parking = T;
-                        });
-                      },
-                    ),
-                    Text(
-                      'Unavailable',
-                      style: TextStyle(
-                          fontWeight: FontWeight.normal,
-                          fontSize: 20,
-                          color: Colors.white),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                  padding: EdgeInsets.all(10),
-                  child: Text(
-                    'Attached Bathroom',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                  )),
-              Container(
-                margin: EdgeInsets.fromLTRB(15, 0, 0, 0),
-                child: Row(
-                  children: <Widget>[
-                    Radio(
-                        value: 'Available',
-                        groupValue: bathroom,
-                        activeColor: Colors.blue,
-                        onChanged: (T) {
-                          print(T);
-                          setState(() {
-                            bathroom = T;
-                          });
-                          print(bathroom);
-                        }),
-                    Text(
-                      'Available',
-                      style: TextStyle(
-                          fontWeight: FontWeight.normal,
-                          fontSize: 20,
-                          color: Colors.white),
-                    ),
-                    Radio(
-                      value: 'Unavailable',
-                      groupValue: bathroom,
-                      onChanged: (T) {
-                        print(T);
-                        setState(() {
-                          bathroom = T;
-                        });
-                      },
-                    ),
-                    Text(
-                      'Unavailable',
-                      style: TextStyle(
-                          fontWeight: FontWeight.normal,
-                          fontSize: 20,
-                          color: Colors.white),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                  height: 50,
-                  padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                  margin: EdgeInsets.fromLTRB(10, 15, 10, 10),
-                  child: RaisedButton(
-                      textColor: Colors.white,
-                      color: Color.fromRGBO(239, 108, 0, 0.9),
-                      child: Text(
-                        'Add Room',
-                        style: TextStyle(fontSize: 23),
-                      ),
-                      onPressed: () async {
-                        if (validate()) {
-                          RoomAPIService apiService = new RoomAPIService();
-                          apiService.addroom(addroommodel).then((value) {
-                            if (value != null) {
-                              if (value.success) {
-                                session.set("roomid", value.roomid);
-                                singleUpload();
-                                sendImg();
-                              } else {
-                                session.set("message", value.error);
-                                print("Error" + value.error);
-                                EasyLoading.showError("Please provide values");
-                              }
-                            }
-                          });
-                        } else {
-                          EasyLoading.showError(
-                              'Please provide all the values');
-                        }
-                        print(bathroom);
-                        print("main imageafter");
-                        print(mainimage);
-                      })),
-            ]),
-          )),
+      appBar: AppBar(
+          title: Text("Site Inspection"),
+          backgroundColor: Color.fromRGBO(13, 71, 161, 1)),
+      body: SafeArea(
+        child: _requestContent(context),
+      ),
     );
   }
 
-  void sendregdata() async {
-    addroommodel = AddRoom(
-        roomTitle: roomtitle.text,
-        description: description.text,
-        address: address.text,
-        price: price.text,
-        roomno: roomno.text,
-        parking: parking,
-        bathroom: bathroom);
+  Widget _requestContent(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 30),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(5),
+              child: Card(
+                color: Colors.grey.shade200,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 15, 0, 10),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.perm_device_information_sharp,
+                        color: Colors.black,
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Site Inspection Indication and tips",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              "Please provide your view for our betterment",
+                              textAlign: TextAlign.justify,
+                              style: TextStyle(fontSize: 14),
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            // For the Request basic description
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Requests for Visit",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    width: size.width,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Checkbox(
+                              value: sitevisit,
+                              onChanged: (value) {
+                                setState(() {
+                                  sitevisit = !sitevisit;
+                                });
+                                print("Site Visit" + sitevisit.toString());
+                              },
+                            ),
+                            Text(
+                              " Site Inspection",
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            SizedBox(
+                              width: 28,
+                            ),
+                            Checkbox(
+                              value: roomPrice,
+                              onChanged: (value) {
+                                setState(() {
+                                  roomPrice = !roomPrice;
+                                });
+                                print("Rates and Price" + roomPrice.toString());
+                              },
+                            ),
+                            Text(
+                              " Price ",
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  TextFormField(
+                    maxLines: 5,
+                    style: TextStyle(fontSize: 20),
+                    controller: inquiry,
+                    validator: (input) => !(input.length > 1)
+                        ? "Plese provide some details about hte visit"
+                        : null,
+                    decoration: InputDecoration(
+                      hintText: "Add furthure details or visit/inspection date",
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.black,
+                        ),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(8),
+                        ),
+                      ),
+                      fillColor: Colors.white,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Text(
+                    "Date For Visit",
+                    style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+                  ),
+                  DateTimePicker(
+                    initialValue: '',
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime(2100),
+                    onChanged: (val) => {date = val},
+                    validator: (val) {
+                      print(val);
+                      return null;
+                    },
+                    onSaved: (val) => {date = val},
+                  ),
+                ],
+              ),
+            ),
+
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 8,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Text(
+                  //   "User Details and Information",
+                  //   style: TextStyle(
+                  //     fontSize: 20,
+                  //     fontWeight: FontWeight.bold,
+                  //   ),
+                  // ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Form(
+                    key: globalFormKey,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6),
+                        color: Colors.white,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          right: 10.0,
+                          left: 10.0,
+                          bottom: 15,
+                          top: 5,
+                        ),
+                        // child: Column(
+                        //   children: [
+                        //     TextFormField(
+                        //       keyboardType: TextInputType.text,
+                        //       controller: username,
+                        //       decoration: InputDecoration(
+                        //           hintText: "User Name", labelText: "UserName"),
+                        //     ),
+                        //     TextFormField(
+                        //       keyboardType: TextInputType.emailAddress,
+                        //       controller: email,
+                        //       decoration: InputDecoration(
+                        //           hintText: "Email", labelText: "Email"),
+                        //     ),
+                        //     TextFormField(
+                        //       keyboardType: TextInputType.number,
+                        //       controller: phone,
+                        //       decoration: InputDecoration(
+                        //           hintText: "ContactNo", labelText: "Phone"),
+                        //     ),
+                        //   ],
+                        // ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 8,
+                  ),
+
+                  SizedBox(
+                    height: 25,
+                  ),
+                  //Flat Button Container
+                  FlatButton(
+                    onPressed: () {
+                      print("Proceed");
+                      print(date);
+                      validate();
+                    },
+                    color: Color.fromRGBO(239, 108, 0, 0.9),
+                    child: Container(
+                      alignment: Alignment.center,
+                      width: 355,
+                      height: 50,
+                      child: Text(
+                        "Submit",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void sendReqData() async {
+    siteRequest = Inspection(
+        sitevisit: sitevisit.toString(),
+        roomPrice: roomPrice.toString(),
+        // username: username.text,
+        inquiry: inquiry.text,
+        // email: email.text,
+        date: phone.text);
+    var response = await http.post("http://10.0.2.2:5000/api/register",
+        headers: {"Content-type": "application/json"},
+        body: json.encode(siteRequest.toJson()));
+    print(response.body);
+    if (response.statusCode == 200) {
+      // Navigator.push(
+      //     context, MaterialPageRoute(builder: (context) => WelcomePage()));
+    } else {
+      print(response);
+    }
   }
 
   bool validate() {
     final form = globalFormKey.currentState;
     //If form is valid then it returns true
     if (form.validate()) {
-      sendregdata();
+      sendReqData();
       return true;
     }
     return false;
-  }
-
-  Future singleUpload() async {
-    String filename = mainimage.path.split('/').last;
-    try {
-      FormData formData = new FormData.fromMap({
-        "image": await MultipartFile.fromFile(mainimage.path,
-            filename: filename, contentType: new MediaType('image', 'png')),
-      });
-      int roomId = await FlutterSession().get("roomid");
-      String token = await FlutterSession().get("token");
-      // Dio dio = new Dio();
-      var response =
-          await dio.post("http://10.0.2.2:5000/v2/singleupload/$roomId",
-              data: formData,
-              options: Options(
-                headers: {"authorization": "$token"},
-              ));
-      if (response.statusCode == 200) {
-        EasyLoading.showSuccess('Room Thumbnail is sucessfully Stored!');
-        print(response.data);
-      } else {
-        print("error");
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  sendImg() async {
-    if (validate()) {
-      if (images != null) {
-        // int i = 0;
-        for (var i = 0; i < images.length; i++) {
-          ByteData byteData = await images[i].getByteData();
-          List<int> imageData = byteData.buffer.asUint8List();
-
-          MultipartFile multipartFile = MultipartFile.fromBytes(
-            imageData,
-            filename: images[i].name,
-            contentType: MediaType('image', 'jpg'),
-          );
-
-          FormData formData = FormData.fromMap({"image": multipartFile});
-          // EasyLoading.show(status: 'Uploading Image...');
-
-          //Image post
-
-          //getting token from flutter session.
-          //getting token from flutter session.
-          String token = await FlutterSession().get("token");
-          int userId = await FlutterSession().get("id");
-          int roomId = await FlutterSession().get("roomid");
-          // int roomid = int.parse(roomId);
-          Dio dio = new Dio();
-          var response = await dio.post(
-              "http://10.0.2.2:5000/v2/$userId/$roomId/multipleuploads",
-              data: formData,
-              options: Options(
-                headers: {"authorization": "$token"},
-              ));
-          if (response.statusCode == 200 || response.statusCode == 201) {
-            print(response.data);
-            EasyLoading.showSuccess("Successfully added");
-          } else {
-            return EasyLoading.show(status: 'Could not store in the system!');
-          }
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => HomeScreen()));
-        }
-      } else {
-        print("Error occured");
-      }
-    } else {
-      String message = await FlutterSession().get("error");
-      EasyLoading.showError(message);
-    }
   }
 }

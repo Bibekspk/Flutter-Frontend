@@ -83,20 +83,17 @@ class _PropertyCarouselState extends State<PropertyCarousel> {
             itemCount: _room.length == null ? 0 : _room.length,
             itemBuilder: (BuildContext context, int index) {
               Data room = _room[index];
-              // RoomData roomList = roomlist[index];
               return GestureDetector(
                 onTap: () {
                   Navigator.push(
                       context,
-                      // MaterialPageRoute(
-                      //     builder: (context) => PropertyListsView(property: property)));
                       MaterialPageRoute(
                           builder: (context) => PropertyListsView(room: room)));
-                  print("Tap");
+
                   session.set("property_id", room.roomId);
-                  session.set("user_id", room.userId);
+                  // session.set("user_id", room.userId);
                   print("Property_ID ==>" + room.roomId.toString());
-                  print("User ==> " + room.userId.toString());
+                  // print("User ==> " + room.userId.toString());
                 },
                 child: Card(
                   margin: EdgeInsets.fromLTRB(5, 5, 0, 45),
