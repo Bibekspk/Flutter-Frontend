@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login_signup/api/getRoom.dart';
 import 'package:flutter_login_signup/models/RoomData.dart';
+import 'package:flutter_login_signup/src/components/SiteReqPage.dart';
 
 // class PropertyListsView extends StatelessWidget {
 //   final Property property;
@@ -53,7 +54,7 @@ class _PropertyListsViewState extends State<PropertyListsView> {
               Container(
                 width: 150,
                 child: FloatingActionButton.extended(
-                  heroTag: "btn1",
+                  heroTag: "call",
                   onPressed: () {
                     print("Button call has been pressed");
                   },
@@ -65,19 +66,21 @@ class _PropertyListsViewState extends State<PropertyListsView> {
                   ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(
-                      Radius.circular(4.0),
+                      Radius.circular(5.0),
                     ),
                   ),
                 ),
               ),
               SizedBox(
-                width: 20,
+                width: 21,
               ),
               Container(
                 width: 150,
                 child: FloatingActionButton.extended(
-                  heroTag: "btn2",
+                  heroTag: "site Visit",
                   onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => SiteRequest()));
                     print("Button call has been pressed");
                   },
                   backgroundColor: Colors.black,
@@ -89,7 +92,7 @@ class _PropertyListsViewState extends State<PropertyListsView> {
                   hoverColor: Colors.amber,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(
-                      Radius.circular(4.0),
+                      Radius.circular(5.0),
                     ),
                   ),
                 ),

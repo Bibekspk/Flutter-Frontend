@@ -1,8 +1,10 @@
 // import 'package:flutter_login_signup/src/components/appbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_login_signup/src/addRoom.dart';
+// import 'package:flutter_login_signup/src/addRoom.dart';
+import 'package:flutter_login_signup/src/components/appbar.dart';
 import 'package:flutter_login_signup/src/components/body.dart';
-import 'package:flutter_login_signup/src/components/room_carosuel.dart';
+import 'package:flutter_login_signup/src/components/navBar.dart';
+// import 'package:flutter_login_signup/src/components/room_carosuel.dart';
 // import 'package:flutter_login_signup/src/components/viewImg.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -14,39 +16,9 @@ class HomeScreen extends StatelessWidget {
         elevation: 0,
         leading: AppbarWidget(),
       ),
+      drawer: NavDrawer(),
       body: Body(),
-      bottomNavigationBar: BottomNavigationBar(
-          // type: BottomNavigationBarType.fixed,
-          items: [
-            BottomNavigationBarItem(
-                icon: IconButton(
-                    icon: Icon(Icons.home),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => HomeScreen()));
-                    }),
-                label: ''),
-            BottomNavigationBarItem(
-                icon: IconButton(
-                    icon: Icon(Icons.add_circle_outline),
-                    onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Roompage()));
-                    }),
-                label: ''),
-            BottomNavigationBarItem(
-                icon: IconButton(
-                    icon: Icon(Icons.add_circle_outline),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => PropertyCarousel()));
-                    }),
-                label: ''),
-          ]),
+      bottomNavigationBar: bottombar(context),
     );
   }
 }
@@ -61,7 +33,9 @@ class AppbarWidget extends StatelessWidget {
     return IconButton(
       icon: Icon(Icons.menu),
       color: Colors.black,
-      onPressed: () {},
+      onPressed: () {
+        // return Drawer(child: NavDrawer());
+      },
     );
   }
 }

@@ -49,6 +49,7 @@ class Data {
   String bathroom;
   String thumbImg;
   List<String> images;
+  UserDetail userDetail;
 
   Data(
       {this.roomId,
@@ -61,7 +62,8 @@ class Data {
       this.parking,
       this.bathroom,
       this.thumbImg,
-      this.images});
+      this.images,
+      this.userDetail});
 
   Data.fromJson(Map<String, dynamic> json) {
     roomId = json['RoomId'];
@@ -75,6 +77,9 @@ class Data {
     bathroom = json['bathroom'];
     thumbImg = json['thumb_Img'];
     images = json['images'].cast<String>();
+    userDetail = json['userDetail'] != null
+        ? new UserDetail.fromJson(json['userDetail'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -90,6 +95,46 @@ class Data {
     data['bathroom'] = this.bathroom;
     data['thumb_Img'] = this.thumbImg;
     data['images'] = this.images;
+    if (this.userDetail != null) {
+      data['userDetail'] = this.userDetail.toJson();
+    }
+    return data;
+  }
+}
+
+class UserDetail {
+  int id;
+  String name;
+  String email;
+  String contact;
+  String password;
+  Null isAdmin;
+
+  UserDetail(
+      {this.id,
+      this.name,
+      this.email,
+      this.contact,
+      this.password,
+      this.isAdmin});
+
+  UserDetail.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    email = json['email'];
+    contact = json['contact'];
+    password = json['password'];
+    isAdmin = json['isAdmin'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['email'] = this.email;
+    data['contact'] = this.contact;
+    data['password'] = this.password;
+    data['isAdmin'] = this.isAdmin;
     return data;
   }
 }

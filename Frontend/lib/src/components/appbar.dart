@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login_signup/src/addRoom.dart';
+import 'package:flutter_login_signup/src/components/room_carosuel.dart';
 import 'package:flutter_login_signup/src/homepage.dart';
 
 AppBar homeAppBar(BuildContext context, String titleName) {
@@ -21,17 +22,44 @@ AppBar homeAppBar(BuildContext context, String titleName) {
 
 Widget bottombar(BuildContext context) {
   return BottomNavigationBar(
-      type: BottomNavigationBarType.fixed,
+      // type: BottomNavigationBarType.fixed,
       items: [
         BottomNavigationBarItem(
-            icon: Icon(Icons.home, color: Color.fromARGB(255, 0, 0, 0)),
-            label: "Home"),
+            icon: IconButton(
+                splashColor: Colors.blue,
+                splashRadius: 2,
+                icon: Icon(Icons.home),
+                iconSize: 32,
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => HomeScreen()));
+                }),
+            label: ''),
         BottomNavigationBarItem(
-            icon: Icon(Icons.add_circle_outlined,
-                color: Color.fromARGB(255, 0, 0, 0)),
-            label: "Add Room")
-      ],
-      onTap: (index) {});
+            icon: IconButton(
+                iconSize: 32,
+                splashColor: Colors.blue,
+                splashRadius: 2,
+                icon: Icon(Icons.add_circle_outline),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Roompage()));
+                }),
+            label: ''),
+        BottomNavigationBarItem(
+            icon: IconButton(
+                iconSize: 32,
+                splashColor: Colors.blue,
+                splashRadius: 2,
+                icon: Icon(Icons.add_circle_outline),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => PropertyCarousel()));
+                }),
+            label: ''),
+      ]);
 }
 
 Scaffold homescrn() {
