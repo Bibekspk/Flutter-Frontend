@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter_login_signup/models/RoomData.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_login_signup/models/InspectionModel.dart';
@@ -6,8 +7,11 @@ import 'package:flutter_login_signup/models/InspectionModel.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 
 class SiteRequest extends StatefulWidget {
+  final Data room;
+
   @override
   _RequestInspectionState createState() => _RequestInspectionState();
+  SiteRequest(this.room);
 }
 
 class _RequestInspectionState extends State<SiteRequest> {
@@ -23,7 +27,6 @@ class _RequestInspectionState extends State<SiteRequest> {
 
   GlobalKey<FormState> globalFormKey = new GlobalKey<FormState>();
   Inspection siteRequest = Inspection();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -261,7 +264,8 @@ class _RequestInspectionState extends State<SiteRequest> {
                     onPressed: () {
                       print("Proceed");
                       print(date);
-                      validate();
+                      // validate();
+                      sendReqData();
                     },
                     color: Color.fromRGBO(239, 108, 0, 0.9),
                     child: Container(
@@ -292,18 +296,20 @@ class _RequestInspectionState extends State<SiteRequest> {
   }
 
   void sendReqData() async {
+    int roomid = widget.room.roomId;
+    int userid = widget.room.userId;
     siteRequest = Inspection(
         sitevisit: sitevisit.toString(),
         roomPrice: roomPrice.toString(),
-        // username: username.text,
         inquiry: inquiry.text,
-        // email: email.text,
         date: phone.text);
-    var response = await http.post("http://10.0.2.2:5000/api/register",
+    var response = await http.post(
+        "http://10.0.2.2:5000/v3/$roomid/visitRequest/$userid",
         headers: {"Content-type": "application/json"},
         body: json.encode(siteRequest.toJson()));
-    print(response.body);
+
     if (response.statusCode == 200) {
+      print(response.body);
       // Navigator.push(
       //     context, MaterialPageRoute(builder: (context) => WelcomePage()));
     } else {

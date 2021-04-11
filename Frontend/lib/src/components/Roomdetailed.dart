@@ -79,8 +79,10 @@ class _PropertyListsViewState extends State<PropertyListsView> {
                 child: FloatingActionButton.extended(
                   heroTag: "site Visit",
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => SiteRequest()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SiteRequest(widget.room)));
                     print("Button call has been pressed");
                   },
                   backgroundColor: Colors.black,
@@ -505,6 +507,23 @@ class _PropertyListsViewState extends State<PropertyListsView> {
                               widget.room.description,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 18),
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.supervised_user_circle,
+                                  size: 18,
+                                ),
+                                SizedBox(
+                                  width: 6,
+                                ),
+                                Text(
+                                  "User Details",
+                                  style: TextStyle(
+                                      fontSize: 19,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
                             ),
                           ],
                         ),
