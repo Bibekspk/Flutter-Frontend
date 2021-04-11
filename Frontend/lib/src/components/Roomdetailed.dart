@@ -508,14 +508,19 @@ class _PropertyListsViewState extends State<PropertyListsView> {
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 18),
                             ),
+                            SizedBox(
+                              width: 10,
+                              height: 15,
+                            ),
+
                             Row(
                               children: [
                                 Icon(
                                   Icons.supervised_user_circle,
-                                  size: 18,
+                                  size: 35,
                                 ),
                                 SizedBox(
-                                  width: 6,
+                                  width: 10,
                                 ),
                                 Text(
                                   "User Details",
@@ -525,6 +530,51 @@ class _PropertyListsViewState extends State<PropertyListsView> {
                                 ),
                               ],
                             ),
+                            Divider(
+                              height: 3,
+                              color: Colors.black,
+                            ),
+                            SizedBox(height: 4, width: 2),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.person_pin_sharp,
+                                  size: 30,
+                                ),
+                                Text(
+                                  " Name : ",
+                                  style: TextStyle(
+                                      fontSize: 19,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  "  " + widget.room.userDetail.name.trim(),
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.phone,
+                                  size: 30,
+                                ),
+                                Text(
+                                  " Contact : ",
+                                  style: TextStyle(
+                                      fontSize: 19,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  "  " + widget.room.userDetail.contact.trim(),
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            )
                           ],
                         ),
                       ),

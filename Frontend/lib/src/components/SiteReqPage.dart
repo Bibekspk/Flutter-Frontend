@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_login_signup/models/RoomData.dart';
+import 'package:flutter_login_signup/src/components/Roomdetailed.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_login_signup/models/InspectionModel.dart';
@@ -20,9 +22,9 @@ class _RequestInspectionState extends State<SiteRequest> {
   bool sitevisit = false;
   bool roomPrice = false;
   String date;
-  TextEditingController username = TextEditingController();
-  TextEditingController email = TextEditingController();
-  TextEditingController phone = TextEditingController();
+  // TextEditingController username = TextEditingController();
+  // TextEditingController email = TextEditingController();
+  // TextEditingController phone = TextEditingController();
   TextEditingController inquiry = TextEditingController();
 
   GlobalKey<FormState> globalFormKey = new GlobalKey<FormState>();
@@ -262,10 +264,22 @@ class _RequestInspectionState extends State<SiteRequest> {
                   //Flat Button Container
                   FlatButton(
                     onPressed: () {
-                      print("Proceed");
-                      print(date);
-                      // validate();
-                      sendReqData();
+                      if (date == null || inquiry.text == null) {
+                        EasyLoading.showError(
+                            "Please provide value of inquiry and date of visit!!");
+                      } else {
+                        print("Proceed");
+                        print(date);
+                        // validate();
+                        sendReqData();
+                        EasyLoading.showSuccess(
+                            "Request successfully Registered");
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    PropertyListsView(room: widget.room)));
+                      }
                     },
                     color: Color.fromRGBO(239, 108, 0, 0.9),
                     child: Container(
@@ -302,7 +316,7 @@ class _RequestInspectionState extends State<SiteRequest> {
         sitevisit: sitevisit.toString(),
         roomPrice: roomPrice.toString(),
         inquiry: inquiry.text,
-        date: phone.text);
+        date: date);
     var response = await http.post(
         "http://10.0.2.2:5000/v3/$roomid/visitRequest/$userid",
         headers: {"Content-type": "application/json"},
