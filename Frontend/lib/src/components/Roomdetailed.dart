@@ -523,7 +523,7 @@ class _PropertyListsViewState extends State<PropertyListsView> {
                                   width: 10,
                                 ),
                                 Text(
-                                  "User Details",
+                                  "Owner Details",
                                   style: TextStyle(
                                       fontSize: 19,
                                       fontWeight: FontWeight.bold),
