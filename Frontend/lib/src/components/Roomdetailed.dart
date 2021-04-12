@@ -1,5 +1,9 @@
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_session/flutter_session.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_login_signup/api/getRoom.dart';
+import 'package:flutter_login_signup/config/config.dart';
 import 'package:flutter_login_signup/models/RoomData.dart';
 import 'package:flutter_login_signup/src/components/SiteReqPage.dart';
 
@@ -22,7 +26,9 @@ class PropertyListsView extends StatefulWidget {
 
 class _PropertyListsViewState extends State<PropertyListsView> {
   List<Data> _room;
-  bool uncheckFavorites = false;
+  // String uncheckFavorites = widget.room.favStatus;
+  String favStatus = widget.room.favStatus; //getting value of favStatus
+  bool uncheckFavorites = favStatus == "true" ? true : false;
 
   @override
   void initState() {
@@ -38,6 +44,7 @@ class _PropertyListsViewState extends State<PropertyListsView> {
   @override
   Widget build(BuildContext context) {
     Size screenWidth = MediaQuery.of(context).size;
+
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -77,7 +84,7 @@ class _PropertyListsViewState extends State<PropertyListsView> {
               Container(
                 width: 150,
                 child: FloatingActionButton.extended(
-                  heroTag: "site Visit",
+                  heroTag: "Site Visit",
                   onPressed: () {
                     Navigator.push(
                         context,
@@ -222,7 +229,19 @@ class _PropertyListsViewState extends State<PropertyListsView> {
                                   onPressed: () {
                                     setState(() {
                                       uncheckFavorites = !uncheckFavorites;
-                                      print('Pressed favorite button');
+                                      if (uncheckFavorites == false) {
+                                        if (removeFav() != null) {
+                                          EasyLoading.showSuccess(
+                                              "Removed From Cart");
+                                        }
+                                      }
+                                      if (uncheckFavorites == true) {
+                                        if (setFav() != null) {
+                                          print("unselected");
+                                          EasyLoading.showSuccess(
+                                              "Added to Cart");
+                                        }
+                                      }
                                     });
                                   },
                                 )),
@@ -230,69 +249,9 @@ class _PropertyListsViewState extends State<PropertyListsView> {
                             ],
                           ),
                         ),
-                        // Padding(
-                        //   padding: EdgeInsets.only(
-                        //       left: 14, right: 24, top: 0, bottom: 0),
-                        //   child: Row(
-                        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //     children: [
-                        //       Row(
-                        //         children: [
-                        //           // Icon(
-                        //           //   Icons.directions,
-                        //           //   color: Colors.white,
-                        //           //   size: 28,
-                        //           // ),
-                        //           // SizedBox(
-                        //           //   width: 4,
-                        //           // ),
-                        //           // Text(
-                        //           //   "North",
-                        //           //   style: TextStyle(
-                        //           //     color: Colors.white,
-                        //           //     fontSize: 15,
-                        //           //   ),
-                        //           // ),
-                        //           SizedBox(
-                        //             width: 10,
-                        //           ),
-                        //           Icon(
-                        //             Icons.aspect_ratio,
-                        //             color: Colors.white,
-                        //             size: 28,
-                        //           ),
-                        //           SizedBox(
-                        //             width: 4,
-                        //           ),
-                        //           Text(
-                        //             widget.room.address,
-                        //             style: TextStyle(
-                        //               color: Colors.white,
-                        //               fontSize: 15,
-                        //             ),
-                        //           ),
-                        //         ],
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
                       ],
                     ),
                   ),
-
-                  // Align(
-                  //   alignment: Alignment.bottomCenter,
-                  //   child: Container(
-                  //     height: size.height * 0.55,
-                  //     decoration: BoxDecoration(
-                  //       color: Colors.white,
-                  //       borderRadius: BorderRadius.only(
-                  //         topLeft: Radius.circular(30),
-                  //         topRight: Radius.circular(30),
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
                 ],
               ),
               Card(
@@ -587,5 +546,35 @@ class _PropertyListsViewState extends State<PropertyListsView> {
         ),
       ),
     );
+  }
+
+  Future<bool> removeFav() async {
+    String url = baseURL;
+    int userid = await FlutterSession().get("id");
+    int roomid = widget.room.roomId;
+    String token = await FlutterSession().get("token");
+    final response = await http.delete(url + "/delfavRoom/$roomid/$userid",
+        headers: {"Content-type": "application/json", "Authorization": token});
+    print(response);
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return null;
+    }
+  }
+
+  Future<bool> setFav() async {
+    String url = baseURL;
+    int userid = await FlutterSession().get("id");
+    int roomid = widget.room.roomId;
+    String token = await FlutterSession().get("token");
+    final response = await http.post(url + "/favRoom/$roomid/$userid",
+        headers: {"Content-type": "application/json", "Authorization": token});
+    print(response);
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return null;
+    }
   }
 }
