@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 // import 'package:flutter_login_signup/src/addRoom.dart';
 import 'package:flutter_login_signup/src/components/room_carosuel.dart';
+import 'package:flutter_login_signup/src/components/searchfilter.dart';
 // import 'package:flutter_login_signup/src/addimg.dart';
 import 'package:flutter_session/flutter_session.dart';
 import 'package:http/http.dart' as http;
@@ -97,7 +98,12 @@ class _State extends State<Body> {
                         focusedBorder: InputBorder.none,
                         suffixIcon: IconButton(
                           icon: Icon(Icons.search),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => FilterPage()));
+                          },
                         )),
                   ),
                 ),

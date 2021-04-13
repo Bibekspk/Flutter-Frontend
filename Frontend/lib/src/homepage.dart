@@ -7,6 +7,9 @@ import 'package:flutter_login_signup/src/loginPage.dart';
 // import 'package:flutter_login_signup/src/welcomePage.dart';
 
 class HomeScreen extends StatelessWidget {
+  final range;
+  HomeScreen({Key key, @required this.range}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,8 +66,10 @@ class HomeScreen extends StatelessWidget {
               ),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => HomeScreen()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => HomeScreen(range: null)));
               },
             ),
             ListTile(
@@ -95,8 +100,12 @@ class HomeScreen extends StatelessWidget {
               ),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => HomeScreen()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => HomeScreen(
+                              range: null,
+                            )));
               },
             ),
             ListTile(

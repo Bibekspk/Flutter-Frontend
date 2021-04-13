@@ -4,9 +4,6 @@ import 'package:flutter_login_signup/src/components/Roomdetailed.dart';
 import 'package:flutter_session/flutter_session.dart';
 // import 'package:propertyfinder/api/api_get.dart';
 import 'package:flutter_login_signup/api/getRoom.dart';
-// import 'package:propertyfinder/models/Property.dart';
-// import 'package:propertyfinder/models/property_model.dart';
-// import 'package:propertyfinder/modules/listview_page/listview.dart';
 
 // class PropertyCarousel extends StatelessWidget {
 //   @override
@@ -21,7 +18,7 @@ class PropertyCarousel extends StatefulWidget {
 }
 
 class _PropertyCarouselState extends State<PropertyCarousel> {
-  List<Data> _room;
+  List<Data> _room = [];
   bool _loading;
   var session = FlutterSession();
 
@@ -90,7 +87,7 @@ class _PropertyCarouselState extends State<PropertyCarousel> {
                       MaterialPageRoute(
                           builder: (context) => PropertyListsView(room: room)));
 
-                  session.set("property_id", room.roomId);
+                  session.set("room_id", room.roomId);
                   // session.set("user_id", room.userId);
                   print("Property_ID ==>" + room.roomId.toString());
                   // print("User ==> " + room.userId.toString());

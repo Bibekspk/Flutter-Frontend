@@ -27,8 +27,9 @@ class PropertyListsView extends StatefulWidget {
 class _PropertyListsViewState extends State<PropertyListsView> {
   List<Data> _room;
   // String uncheckFavorites = widget.room.favStatus;
-  String favStatus = widget.room.favStatus; //getting value of favStatus
-  bool uncheckFavorites = favStatus == "true" ? true : false;
+  // String favStatus = widget.room.favStatus; //getting value of favStatus
+  // bool uncheckFavorites = favStatus == "true" ? true : false;
+  bool uncheckFavorites = false;
 
   @override
   void initState() {

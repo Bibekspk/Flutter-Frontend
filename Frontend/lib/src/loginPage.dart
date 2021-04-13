@@ -151,7 +151,7 @@ class _State extends State<LoginPage> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                HomeScreen()));
+                                                HomeScreen(range: null)));
                                     // ImageAPIService imgapi =
                                     // new ImageAPIService();
                                     // imgapi.fetchAlbum().then((value) {

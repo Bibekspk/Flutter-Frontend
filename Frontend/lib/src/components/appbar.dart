@@ -31,8 +31,12 @@ Widget bottombar(BuildContext context) {
                 icon: Icon(Icons.home),
                 iconSize: 32,
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => HomeScreen()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => HomeScreen(
+                                range: null,
+                              )));
                 }),
             label: ''),
         BottomNavigationBarItem(
@@ -65,7 +69,12 @@ Widget bottombar(BuildContext context) {
 Scaffold homescrn() {
   return Scaffold(
     body: PageView(
-      children: <Widget>[HomeScreen(), Roompage()],
+      children: <Widget>[
+        HomeScreen(
+          range: null,
+        ),
+        Roompage()
+      ],
     ),
   );
 }
