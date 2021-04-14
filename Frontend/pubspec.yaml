@@ -33,7 +33,7 @@ dependencies:
   date_time_picker: "^1.1.0"
   json_annotation:
   image_picker: ^0.6.7+22
-  syncfusion_flutter_sliders: ^18.1.42-beta
+  flutter_map:
 
 
 dev_dependencies:
