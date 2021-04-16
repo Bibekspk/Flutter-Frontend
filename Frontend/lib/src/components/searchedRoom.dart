@@ -14,17 +14,17 @@ import 'package:flutter_login_signup/api/getRoom.dart';
 // }
 
 // ignore: must_be_immutable
-class PropertyCarousel extends StatefulWidget {
-  // String startPrice;
-  // String endPrice;
-  // String search;
-  // PropertyCarousel({Key key, this.startPrice, this.endPrice, this.search})
-  //     : super(key: key);
+class SearchedRooms extends StatefulWidget {
+  String startPrice;
+  String endPrice;
+  String search;
+  SearchedRooms({Key key, this.startPrice, this.endPrice, this.search})
+      : super(key: key);
   @override
-  _PropertyCarouselState createState() => _PropertyCarouselState();
+  _SearchedRoomsState createState() => _SearchedRoomsState();
 }
 
-class _PropertyCarouselState extends State<PropertyCarousel> {
+class _SearchedRoomsState extends State<SearchedRooms> {
   List<Data> _room = [];
   bool _loading;
   var session = FlutterSession();
@@ -38,8 +38,13 @@ class _PropertyCarouselState extends State<PropertyCarousel> {
   void initState() {
     _loading = true;
     super.initState();
-    Services.getRoom().then((room) {
+    Services.searchedRoom(widget.search, widget.startPrice, widget.endPrice)
+        .then((room) {
       setState(() {
+        print("Range1 " + widget.startPrice);
+        print("Range2 " + widget.endPrice);
+        print("Search " + widget.search);
+
         _room = room;
         _loading = false;
       });
@@ -59,7 +64,7 @@ class _PropertyCarouselState extends State<PropertyCarousel> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
-                'Featured Rooms',
+                'Searched Rooms',
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,

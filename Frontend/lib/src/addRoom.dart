@@ -587,8 +587,8 @@ class _AddRoomPageState extends State<Roompage> {
           } else {
             return EasyLoading.show(status: 'Could not store in the system!');
           }
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => HomeScreen(range: null)));
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => HomeScreen()));
         }
       } else {
         print("Error occured");

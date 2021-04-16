@@ -96,12 +96,17 @@ class _FilterPageState extends State<FilterPage> {
                       style: TextStyle(fontSize: 20, color: Colors.white),
                     ),
                     onPressed: () {
-                      print(selectedRange.end.round().toString());
+                      // print("startRange" + startRange);
+                      // print(endRange);
+
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => HomeScreen(
-                                    range: selectedRange,
+                                    startRange:
+                                        selectedRange.start.round().toString(),
+                                    endRange:
+                                        selectedRange.end.round().toString(),
                                   )));
                     })),
           ],

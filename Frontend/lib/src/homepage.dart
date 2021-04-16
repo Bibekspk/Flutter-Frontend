@@ -6,10 +6,16 @@ import 'package:flutter_login_signup/src/components/savedRooms.dart';
 import 'package:flutter_login_signup/src/loginPage.dart';
 // import 'package:flutter_login_signup/src/welcomePage.dart';
 
-class HomeScreen extends StatelessWidget {
-  final range;
-  HomeScreen({Key key, @required this.range}) : super(key: key);
+// ignore: must_be_immutable
+class HomeScreen extends StatefulWidget {
+  String startRange;
+  String endRange;
+  HomeScreen({Key key, this.startRange, this.endRange}) : super(key: key);
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
 
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,10 +72,8 @@ class HomeScreen extends StatelessWidget {
               ),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => HomeScreen(range: null)));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => HomeScreen()));
               },
             ),
             ListTile(
@@ -100,12 +104,8 @@ class HomeScreen extends StatelessWidget {
               ),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => HomeScreen(
-                              range: null,
-                            )));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => HomeScreen()));
               },
             ),
             ListTile(
@@ -129,7 +129,10 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       ),
-      body: Body(),
+      body: Body(
+        startPrice: widget.startRange,
+        endPrice: widget.endRange,
+      ),
       bottomNavigationBar: bottombar(context),
     );
   }
