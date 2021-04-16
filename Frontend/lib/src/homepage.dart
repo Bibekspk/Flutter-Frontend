@@ -129,9 +129,11 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      body: Body(
-        startPrice: widget.startRange,
-        endPrice: widget.endRange,
+      body: SingleChildScrollView(
+        child: Body(
+          startPrice: widget.startRange,
+          endPrice: widget.endRange,
+        ),
       ),
       bottomNavigationBar: bottombar(context),
     );

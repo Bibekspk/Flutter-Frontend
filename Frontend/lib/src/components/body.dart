@@ -47,7 +47,7 @@ class _State extends State<Body> {
     return SingleChildScrollView(
         child: Column(children: <Widget>[
       Container(
-        height: size.height * 0.27, //covers 20 percent
+        height: size.height * 0.24, //covers 20 percent
         decoration: BoxDecoration(
             color: Colors.green,
             borderRadius: BorderRadius.only(
@@ -58,7 +58,7 @@ class _State extends State<Body> {
           child: Stack(
             children: <Widget>[
               Container(
-                  margin: EdgeInsets.fromLTRB(15, 20, 0, 0),
+                  margin: EdgeInsets.fromLTRB(15, 2, 0, 0),
                   child: Row(
                     children: <Widget>[
                       Text(
@@ -88,7 +88,7 @@ class _State extends State<Body> {
               Positioned(
                 child: Container(
                   alignment: Alignment.center,
-                  margin: EdgeInsets.fromLTRB(15, 60, 10, 0),
+                  margin: EdgeInsets.fromLTRB(15, 48, 10, 0),
                   height: 54,
                   decoration: BoxDecoration(
                       color: Colors.white,
@@ -131,10 +131,10 @@ class _State extends State<Body> {
                 ),
               ),
               Container(
-                  height: 55,
+                  height: 50,
                   // width: 100,
-                  padding: EdgeInsets.fromLTRB(10, 0, 0, 10),
-                  margin: EdgeInsets.fromLTRB(285, 123, 5, 0),
+                  padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                  margin: EdgeInsets.fromLTRB(285, 109, 5, 0),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20.0),
                   ),

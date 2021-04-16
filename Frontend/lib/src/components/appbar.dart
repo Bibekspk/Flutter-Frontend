@@ -21,45 +21,41 @@ AppBar homeAppBar(BuildContext context, String titleName) {
 }
 
 Widget bottombar(BuildContext context) {
-  return BottomNavigationBar(
-      // type: BottomNavigationBarType.fixed,
-      items: [
-        BottomNavigationBarItem(
-            icon: IconButton(
-                splashColor: Colors.blue,
-                splashRadius: 2,
-                icon: Icon(Icons.home),
-                iconSize: 32,
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => HomeScreen()));
-                }),
-            label: ''),
-        BottomNavigationBarItem(
-            icon: IconButton(
-                iconSize: 32,
-                splashColor: Colors.blue,
-                splashRadius: 2,
-                icon: Icon(Icons.add_circle_outline),
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Roompage()));
-                }),
-            label: ''),
-        BottomNavigationBarItem(
-            icon: IconButton(
-                iconSize: 32,
-                splashColor: Colors.blue,
-                splashRadius: 2,
-                icon: Icon(Icons.add_circle_outline),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => PropertyCarousel()));
-                }),
-            label: ''),
-      ]);
+  return BottomNavigationBar(type: BottomNavigationBarType.fixed, items: [
+    BottomNavigationBarItem(
+        icon: IconButton(
+            splashColor: Colors.blue,
+            splashRadius: 2,
+            icon: Icon(Icons.home),
+            iconSize: 32,
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => HomeScreen()));
+            }),
+        label: ''),
+    BottomNavigationBarItem(
+        icon: IconButton(
+            iconSize: 32,
+            splashColor: Colors.blue,
+            splashRadius: 2,
+            icon: Icon(Icons.add_circle_outline),
+            onPressed: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => Roompage()));
+            }),
+        label: ''),
+    BottomNavigationBarItem(
+        icon: IconButton(
+            iconSize: 32,
+            splashColor: Colors.blue,
+            splashRadius: 2,
+            icon: Icon(Icons.add_circle_outline),
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => PropertyCarousel()));
+            }),
+        label: ''),
+  ]);
 }
 
 Scaffold homescrn() {
