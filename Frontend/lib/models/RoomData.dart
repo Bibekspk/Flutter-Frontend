@@ -50,7 +50,7 @@ class Data {
   String thumbImg;
   List<String> images;
   UserDetail userDetail;
-  String favStatus;
+  // String favStatus;
 
   Data(
       {this.roomId,
@@ -64,7 +64,7 @@ class Data {
       this.bathroom,
       this.thumbImg,
       this.images,
-      this.favStatus,
+      // this.favStatus,
       this.userDetail});
 
   Data.fromJson(Map<String, dynamic> json) {
@@ -78,7 +78,7 @@ class Data {
     parking = json['parking'];
     bathroom = json['bathroom'];
     thumbImg = json['thumb_Img'];
-    favStatus = json['favStatus'];
+    // favStatus = json['favStatus'];
     images = json['images'].cast<String>();
     userDetail = json['userDetail'] != null
         ? new UserDetail.fromJson(json['userDetail'])
@@ -97,7 +97,7 @@ class Data {
     data['parking'] = this.parking;
     data['bathroom'] = this.bathroom;
     data['thumb_Img'] = this.thumbImg;
-    data['favStatus'] = this.favStatus;
+    // data['favStatus'] = this.favStatus;
     data['images'] = this.images;
     if (this.userDetail != null) {
       data['userDetail'] = this.userDetail.toJson();

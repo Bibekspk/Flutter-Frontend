@@ -214,8 +214,8 @@ class _SignUpPageState extends State<SignUpPage> {
 
   void sendregdata() async {
     regmodel = RegisterModel(
-        email: emailController.text,
-        name: nameController.text,
+        email: emailController.text.trim(),
+        name: nameController.text.trim(),
         password: passwordController.text,
         passwordconfirm: confirmpasswordController.text,
         phone: contactController.text);

@@ -1,3 +1,4 @@
+// import 'package:flutter_login_signup/models/searchModel.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_login_signup/models/RoomData.dart';
 
@@ -33,7 +34,9 @@ class Services {
         searchurl + "/$search/$start/$end",
         headers: {"Content-type": "application/json"},
       );
+      print("Search in api" + search);
       if (response.statusCode == 200) {
+        print(start);
         // print(response.body);
         final body = response.body;
         // print(body.length);

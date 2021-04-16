@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     size: 55,
                   ),
                   SizedBox(
-                    height: 25,
+                    height: 5,
                   ),
                   Expanded(
                     child: Text(

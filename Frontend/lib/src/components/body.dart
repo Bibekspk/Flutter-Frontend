@@ -117,9 +117,6 @@ class _State extends State<Body> {
                           icon: Icon(Icons.search),
                           onPressed: () {
                             print("Search " + search.text);
-                            print("Search1 " + startRange);
-                            print("Search2 " + endRange);
-
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(

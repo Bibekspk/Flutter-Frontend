@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login_signup/models/RoomData.dart';
+// import 'package:flutter_login_signup/models/RoomData.dart';
 // import 'package:flutter_login_signup/models/searchModel.dart';
-import 'package:flutter_login_signup/src/components/Roomdetailed.dart';
+// import 'package:flutter_login_signup/models/searchModel.dart';
+// import 'package:flutter_login_signup/src/components/Roomdetailed.dart';
 import 'package:flutter_session/flutter_session.dart';
 // import 'package:propertyfinder/api/api_get.dart';
 import 'package:flutter_login_signup/api/getRoom.dart';
@@ -20,6 +22,8 @@ class SearchedRooms extends StatefulWidget {
   String search;
   SearchedRooms({Key key, this.startPrice, this.endPrice, this.search})
       : super(key: key);
+
+  // get room => null;
   @override
   _SearchedRoomsState createState() => _SearchedRoomsState();
 }
@@ -29,11 +33,6 @@ class _SearchedRoomsState extends State<SearchedRooms> {
   bool _loading;
   var session = FlutterSession();
 
-  // var search;
-  // get startPrice => startPrice;
-  // get search => search;
-  // get endPrice => endPrice;
-
   @override
   void initState() {
     _loading = true;
@@ -41,10 +40,6 @@ class _SearchedRoomsState extends State<SearchedRooms> {
     Services.searchedRoom(widget.search, widget.startPrice, widget.endPrice)
         .then((room) {
       setState(() {
-        print("Range1 " + widget.startPrice);
-        print("Range2 " + widget.endPrice);
-        print("Search " + widget.search);
-
         _room = room;
         _loading = false;
       });
@@ -99,14 +94,14 @@ class _SearchedRoomsState extends State<SearchedRooms> {
               Data room = _room[index];
               return GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => PropertyListsView(room: room)));
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (context) => PropertyListsView(: room)));
 
-                  session.set("room_id", room.roomId);
-                  // session.set("user_id", room.userId);
-                  print("Property_ID ==>" + room.roomId.toString());
+                  // session.set("room_id", room.roomId);
+                  // // session.set("user_id", room.userId);
+                  // print("Property_ID ==>" + room.roomId.toString());
                   // print("User ==> " + room.userId.toString());
                 },
                 child: Card(
