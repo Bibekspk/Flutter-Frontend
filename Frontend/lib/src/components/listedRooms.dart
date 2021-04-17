@@ -12,19 +12,19 @@ import 'package:flutter_login_signup/api/getRoom.dart';
 // }
 
 // ignore: must_be_immutable
-class SearchedRooms extends StatefulWidget {
-  String startPrice;
-  String endPrice;
-  String search;
-  SearchedRooms({Key key, this.startPrice, this.endPrice, this.search})
-      : super(key: key);
+class ListedRooms extends StatefulWidget {
+  // String startPrice;
+  // String endPrice;
+  // String search;
+  // SearchedRooms({Key key, this.startPrice, this.endPrice, this.search})
+  //     : super(key: key);
 
   // get room => null;
   @override
-  _SearchedRoomsState createState() => _SearchedRoomsState();
+  _ListedRoomsState createState() => _ListedRoomsState();
 }
 
-class _SearchedRoomsState extends State<SearchedRooms> {
+class _ListedRoomsState extends State<ListedRooms> {
   List<Data> _room = [];
   bool _loading;
   var session = FlutterSession();
@@ -33,8 +33,7 @@ class _SearchedRoomsState extends State<SearchedRooms> {
   void initState() {
     _loading = true;
     super.initState();
-    Services.searchedRoom(widget.search, widget.startPrice, widget.endPrice)
-        .then((room) {
+    Services.listedRoom().then((room) {
       setState(() {
         _room = room;
         _loading = false;
@@ -46,7 +45,7 @@ class _SearchedRoomsState extends State<SearchedRooms> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text("Search Results"),
+          title: Text("Added Rooms"),
           backgroundColor: Color.fromRGBO(13, 71, 161, 1)),
       body: Column(
         children: <Widget>[
@@ -59,7 +58,7 @@ class _SearchedRoomsState extends State<SearchedRooms> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text(
-                  'Searched Rooms',
+                  'Listed Rooms',
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
@@ -106,7 +105,7 @@ class _SearchedRoomsState extends State<SearchedRooms> {
                     print("User ==> " + room.userId.toString());
                   },
                   child: Card(
-                    // margin: EdgeInsets.fromLTRB(5, 5, 0, 15),
+                    margin: EdgeInsets.fromLTRB(5, 5, 0, 15),
                     child: Stack(
                       alignment: Alignment.topCenter,
                       children: <Widget>[

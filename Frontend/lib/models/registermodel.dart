@@ -4,10 +4,16 @@ class RegisterModel {
   String passwordconfirm;
   String email;
   String phone;
+  String address;
 
   // String xyz;
   RegisterModel(
-      {this.name, this.password, this.passwordconfirm, this.email, this.phone});
+      {this.name,
+      this.password,
+      this.passwordconfirm,
+      this.email,
+      this.phone,
+      this.address});
   // factory Model.fromJson(Map<String, dynamic> json) => _$ModelFromJson(json);
   Map<String, dynamic> toJson() => _$ModelToJson(this);
 
@@ -16,7 +22,8 @@ class RegisterModel {
         'password': instance.password,
         'passwordconfirm': instance.passwordconfirm,
         'email': instance.email,
-        'phone': instance.phone
+        'phone': instance.phone,
+        'address': instance.address
       };
 }
 // Model _$ModelFromJson(Map<String, dynamic> json) {

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_login_signup/src/components/appbar.dart';
 import 'package:flutter_login_signup/src/components/body.dart';
 import 'package:flutter_login_signup/src/components/savedRooms.dart';
+import 'package:flutter_login_signup/src/components/settings.dart';
 import 'package:flutter_login_signup/src/loginPage.dart';
 // import 'package:flutter_login_signup/src/welcomePage.dart';
 
@@ -105,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
               onTap: () {
                 Navigator.pop(context);
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => HomeScreen()));
+                    MaterialPageRoute(builder: (context) => SettingsTwoPage()));
               },
             ),
             ListTile(

@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_login_signup/src/loginPage.dart';
-import 'package:flutter_login_signup/src/welcomePage.dart';
+import 'package:flutter_login_signup/src/components/userProfile.dart';
+// import 'package:flutter_login_signup/src/loginPage.dart';
+// import 'package:flutter_login_signup/src/welcomePage.dart';
 import 'package:flutter_login_signup/models/registermodel.dart';
+import 'package:flutter_session/flutter_session.dart';
 
 // import 'package:flutter_login_signup/src/loginPage.dart';
 // import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class SignUpPage extends StatefulWidget {
+class EditProfile extends StatefulWidget {
   @override
-  _SignUpPageState createState() => _SignUpPageState();
+  _EditProfileState createState() => _EditProfileState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _EditProfileState extends State<EditProfile> {
   TextEditingController nameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController confirmpasswordController = TextEditingController();
   TextEditingController contactController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController addressController = TextEditingController();
@@ -50,7 +50,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       alignment: Alignment.center,
                       padding: EdgeInsets.all(10),
                       child: Text(
-                        'SIGN UP',
+                        'Edit Profile',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 30),
                       )),
@@ -152,54 +152,6 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(10),
-                    child: TextField(
-                      obscureText: true,
-                      style: TextStyle(fontSize: 17.5),
-                      controller: passwordController,
-                      decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(5))),
-                          focusedBorder: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(5)),
-                              borderSide: BorderSide(color: Colors.white)),
-                          labelText: 'Password',
-                          labelStyle:
-                              TextStyle(fontSize: 19.0, color: Colors.black),
-                          fillColor: Color(0x00000000),
-                          filled: true),
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                    child: TextFormField(
-                      obscureText: true,
-                      style: TextStyle(fontSize: 17.5),
-                      controller: confirmpasswordController,
-                      validator: (input) =>
-                          !(input == (passwordController.text))
-                              ? "Passwords donot match"
-                              : null,
-                      decoration: InputDecoration(
-                          errorStyle:
-                              TextStyle(fontSize: 16.0, color: Colors.black),
-                          enabledBorder: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(5))),
-                          focusedBorder: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(5)),
-                              borderSide: BorderSide(color: Colors.white)),
-                          labelText: 'Confirm Password',
-                          labelStyle:
-                              TextStyle(fontSize: 19.0, color: Colors.black),
-                          fillColor: Colors.transparent,
-                          filled: true),
-                    ),
-                  ),
-                  Container(
                       height: 50,
                       padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                       margin: EdgeInsets.fromLTRB(10, 15, 10, 0),
@@ -207,33 +159,13 @@ class _SignUpPageState extends State<SignUpPage> {
                           textColor: Colors.white,
                           color: Color.fromRGBO(239, 108, 0, 0.9),
                           child: Text(
-                            'Regsiter',
+                            'Edit Profile',
                             style: TextStyle(fontSize: 23),
                           ),
                           onPressed: () {
                             validate();
                             print(emailController.text);
                           })),
-                  Container(
-                      child: Row(
-                    children: <Widget>[
-                      Text('Already Have an account?'),
-                      FlatButton(
-                        textColor: Colors.amber,
-                        child: Text(
-                          'Login',
-                          style: TextStyle(fontSize: 18),
-                        ),
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => LoginPage()));
-                        },
-                      )
-                    ],
-                    mainAxisAlignment: MainAxisAlignment.center,
-                  ))
                 ],
               ))),
     );
@@ -243,17 +175,16 @@ class _SignUpPageState extends State<SignUpPage> {
     regmodel = RegisterModel(
         email: emailController.text.trim(),
         name: nameController.text.trim(),
-        password: passwordController.text,
-        passwordconfirm: confirmpasswordController.text,
         address: addressController.text,
         phone: contactController.text);
-    var response = await http.post("http://10.0.2.2:5000/api/register",
+    int id = await FlutterSession().get('id');
+    var response = await http.post("http://10.0.2.2:5000/api/editProfile/$id",
         headers: {"Content-type": "application/json"},
         body: json.encode(regmodel.toJson()));
     print(response.body);
     if (response.statusCode == 200) {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => WelcomePage()));
+          context, MaterialPageRoute(builder: (context) => ProfileEightPage()));
     } else {
       print(response);
     }
