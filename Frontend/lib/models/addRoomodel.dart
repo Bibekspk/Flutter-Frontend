@@ -6,16 +6,21 @@ class AddRoom {
   String roomno;
   String parking;
   String bathroom;
+  String latitude;
+  String longitude;
 
   // String xyz;
-  AddRoom(
-      {this.roomTitle,
-      this.description,
-      this.address,
-      this.price,
-      this.roomno,
-      this.parking,
-      this.bathroom});
+  AddRoom({
+    this.roomTitle,
+    this.description,
+    this.address,
+    this.price,
+    this.roomno,
+    this.parking,
+    this.bathroom,
+    this.latitude,
+    this.longitude,
+  });
   // factory Model.fromJson(Map<String, dynamic> json) => _$ModelFromJson(json);
   Map<String, dynamic> toJson() => _$ModelToJson(this);
 
@@ -26,7 +31,9 @@ class AddRoom {
         'price': instance.price,
         'roomno': instance.roomno,
         'parking': instance.parking,
-        'bathroom': instance.bathroom
+        'bathroom': instance.bathroom,
+        'latitude': instance.latitude,
+        'longitude': instance.longitude
       };
 }
 

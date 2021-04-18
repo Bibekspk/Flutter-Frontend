@@ -7,7 +7,7 @@ import 'package:flutter_login_signup/api/getRoom.dart';
 import 'package:flutter_login_signup/config/config.dart';
 import 'package:flutter_login_signup/models/RoomData.dart';
 import 'package:flutter_login_signup/src/components/SiteReqPage.dart';
-
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 // class PropertyListsView extends StatelessWidget {
 //   final Property property;
 
@@ -40,6 +40,24 @@ class _PropertyListsViewState extends State<PropertyListsView> {
         _room = room;
         // _loading = false;
       });
+    });
+  }
+
+  Set<Marker> _markers = {};
+  // GoogleMapController controller;
+  GoogleMapController controller;
+
+  _onMapCreated(GoogleMapController controller) {
+    setState(() {
+      _markers.add(
+        Marker(
+          markerId: MarkerId('mark-i'),
+          position: LatLng(
+            double.parse(widget.room.Latitude),
+            double.parse(widget.room.Longitude),
+          ),
+        ),
+      );
     });
   }
 
@@ -473,7 +491,54 @@ class _PropertyListsViewState extends State<PropertyListsView> {
                               width: 10,
                               height: 15,
                             ),
-
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 1),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Location (Map)",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.3),
+                                          spreadRadius: 10,
+                                          blurRadius: 10,
+                                          offset: Offset(0,
+                                              3), // changes position of shadow
+                                        ),
+                                      ],
+                                    ),
+                                    width: size.width,
+                                    height: size.height * 0.30,
+                                    child: GoogleMap(
+                                      onMapCreated: _onMapCreated(controller),
+                                      markers: _markers,
+                                      initialCameraPosition: CameraPosition(
+                                        target: LatLng(
+                                          double.parse(widget.room.Latitude),
+                                          double.parse(widget.room.Longitude),
+                                        ),
+                                        zoom: 14.0,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                              height: 15,
+                            ),
                             Row(
                               children: [
                                 Icon(

@@ -48,6 +48,10 @@ class Data {
   String parking;
   String bathroom;
   String thumbImg;
+  // ignore: non_constant_identifier_names
+  String Latitude;
+  // ignore: non_constant_identifier_names
+  String Longitude;
   List<String> images;
   UserDetail userDetail;
   // String favStatus;
@@ -63,6 +67,8 @@ class Data {
       this.parking,
       this.bathroom,
       this.thumbImg,
+      // ignore: non_constant_identifier_names
+      this.Latitude,
       this.images,
       // this.favStatus,
       this.userDetail});
@@ -78,6 +84,8 @@ class Data {
     parking = json['parking'];
     bathroom = json['bathroom'];
     thumbImg = json['thumb_Img'];
+    Latitude = json['Latitude'];
+    Longitude = json['Longitude'];
     // favStatus = json['favStatus'];
     images = json['images'].cast<String>();
     userDetail = json['userDetail'] != null
@@ -97,6 +105,8 @@ class Data {
     data['parking'] = this.parking;
     data['bathroom'] = this.bathroom;
     data['thumb_Img'] = this.thumbImg;
+    data['Latitude'] = this.Latitude;
+    data['Longitude'] = this.Longitude;
     // data['favStatus'] = this.favStatus;
     data['images'] = this.images;
     if (this.userDetail != null) {

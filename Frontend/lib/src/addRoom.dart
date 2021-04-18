@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_login_signup/src/components/map.dart';
 import 'package:flutter_login_signup/src/homepage.dart';
 import 'package:flutter_login_signup/api/addRoomapi.dart';
 import 'package:flutter_login_signup/models/addRoomodel.dart';
@@ -23,6 +24,8 @@ class _AddRoomPageState extends State<Roompage> {
   TextEditingController address = TextEditingController();
   TextEditingController price = TextEditingController();
   TextEditingController roomno = TextEditingController();
+  TextEditingController latitude = TextEditingController();
+  TextEditingController longitude = TextEditingController();
 
   AddRoom addroommodel = AddRoom();
   var session = FlutterSession(); // create session instance
@@ -51,6 +54,19 @@ class _AddRoomPageState extends State<Roompage> {
       }
     });
   }
+
+  // Future<bool> checkAndRequestCameraPermissions() async {
+  //   PermissionStatus permission = await PermissionHandler()
+  //       .checkPermissionStatus(PermissionGroup.location);
+  //   if (permission != PermissionStatus.granted) {
+  //     Map<PermissionGroup, PermissionStatus> permissions =
+  //         await PermissionHandler()
+  //             .requestPermissions([PermissionGroup.location]);
+  //     return permissions[PermissionGroup.location] == PermissionStatus.granted;
+  //   } else {
+  //     return true;
+  //   }
+  // }
 
   Widget buildGridView() {
     return GridView.count(
@@ -257,6 +273,50 @@ class _AddRoomPageState extends State<Roompage> {
                           TextStyle(fontSize: 16.0, color: Colors.white),
                       fillColor: Color(0x00000000),
                       filled: true),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 14, horizontal: 15),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Select Location",
+                          style: TextStyle(
+                              fontSize: 22, fontWeight: FontWeight.bold),
+                        ),
+                        FlatButton(
+                          height: 54,
+                          padding: EdgeInsets.symmetric(horizontal: 4),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(4),
+                              side: BorderSide(color: Colors.blueGrey[500])),
+                          color: Colors.blueGrey[500],
+                          child: Text(" Pick Location ",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 21)),
+                          onPressed: () async {
+                            print("Open Google map");
+                            final info = await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => MapsGoogle()));
+                            print(info.latitude.toString());
+                            setState(() {
+                              latitude = info.latitude.toString()
+                                  as TextEditingController;
+                              longitude = info.longitude.toString()
+                                  as TextEditingController;
+                              print("asdfsadf" + latitude.text);
+                              print("saasdf" + longitude.text);
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
               Container(
@@ -503,13 +563,16 @@ class _AddRoomPageState extends State<Roompage> {
 
   void sendregdata() async {
     addroommodel = AddRoom(
-        roomTitle: roomtitle.text,
-        description: description.text,
-        address: address.text,
-        price: price.text,
-        roomno: roomno.text,
-        parking: parking,
-        bathroom: bathroom);
+      roomTitle: roomtitle.text,
+      description: description.text,
+      address: address.text,
+      price: price.text,
+      roomno: roomno.text,
+      parking: parking,
+      bathroom: bathroom,
+      latitude: latitude.text,
+      longitude: longitude.text,
+    );
   }
 
   bool validate() {
