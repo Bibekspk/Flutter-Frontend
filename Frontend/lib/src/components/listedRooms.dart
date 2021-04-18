@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login_signup/models/RoomData.dart';
 import 'package:flutter_login_signup/src/components/Roomdetailed.dart';
+import 'package:flutter_login_signup/src/components/editProperty.dart';
 import 'package:flutter_session/flutter_session.dart';
 import 'package:flutter_login_signup/api/getRoom.dart';
 
@@ -83,7 +84,7 @@ class _ListedRoomsState extends State<ListedRooms> {
             ),
           ),
           Container(
-            height: 450,
+            height: 530,
             margin: EdgeInsets.fromLTRB(0, 0, 0, 15),
             // color: Colors.grey,
             child: ListView.builder(
@@ -99,12 +100,13 @@ class _ListedRoomsState extends State<ListedRooms> {
                             builder: (context) =>
                                 PropertyListsView(room: room)));
 
-                    session.set("room_id", room.roomId);
+                    session.set("roomid", room.roomId);
                     // session.set("user_id", room.userId);
-                    print("Property_ID ==>" + room.roomId.toString());
+                    print("Room_Id ==>" + room.roomId.toString());
                     print("User ==> " + room.userId.toString());
                   },
                   child: Card(
+                    color: Colors.blueGrey[100],
                     margin: EdgeInsets.fromLTRB(5, 5, 0, 15),
                     child: Stack(
                       alignment: Alignment.topCenter,
@@ -353,7 +355,55 @@ class _ListedRoomsState extends State<ListedRooms> {
                                     ),
                                   ],
                                 ),
-
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Text(
+                                      "Edit",
+                                      style: TextStyle(
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    IconButton(
+                                      splashColor: Colors.green[600],
+                                      splashRadius: 53.0,
+                                      icon: Icon(
+                                        Icons.edit,
+                                        size: 40,
+                                      ),
+                                      onPressed: () {
+                                        session.set('roomid', room.roomId);
+                                        print((room.roomId));
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    EditRoom()));
+                                      },
+                                      color: Colors.green[600],
+                                    ),
+                                    Text(
+                                      "Delete",
+                                      style: TextStyle(
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    IconButton(
+                                      splashColor: Colors.red[600],
+                                      splashRadius: 53.0,
+                                      icon: Icon(
+                                        Icons.delete,
+                                        size: 40,
+                                      ),
+                                      onPressed: () {},
+                                      color: Colors.red[600],
+                                    ),
+                                  ],
+                                ),
                                 // Text(
                                 //   propertyLists.propertyDescription,
                                 //   style: TextStyle(color: Colors.grey),
