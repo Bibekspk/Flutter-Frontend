@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_login_signup/models/RoomData.dart';
 import 'package:flutter_login_signup/src/components/Roomdetailed.dart';
+import 'package:flutter_login_signup/src/components/appbar.dart';
 import 'package:flutter_login_signup/src/components/editProperty.dart';
+import 'package:flutter_login_signup/src/components/settings.dart';
 import 'package:flutter_session/flutter_session.dart';
 import 'package:flutter_login_signup/api/getRoom.dart';
+import 'package:http/http.dart' as http;
 
 // class PropertyCarousel extends StatelessWidget {
 //   @override
@@ -111,149 +115,6 @@ class _ListedRoomsState extends State<ListedRooms> {
                     child: Stack(
                       alignment: Alignment.topCenter,
                       children: <Widget>[
-                        // Positioned(
-                        //   bottom: 0,
-                        //   child: Container(
-                        //     height: 280,
-                        //     width: 300,
-                        //     decoration: BoxDecoration(
-                        //       color: Colors.white,
-                        //       borderRadius: BorderRadius.circular(10),
-                        //       boxShadow: [
-                        //         BoxShadow(
-                        //           color: Colors.black26,
-                        //           offset: Offset(0.0, 2.0),
-                        //           blurRadius: 6.0,
-                        //         )
-                        //       ],
-                        //     ),
-                        //     child: Padding(
-                        //       padding: const EdgeInsets.all(9.0),
-                        //       child: Column(
-                        //         crossAxisAlignment: CrossAxisAlignment.start,
-                        //         mainAxisAlignment: MainAxisAlignment.end,
-                        //         children: <Widget>[
-                        //           Row(children: <Widget>[
-                        //             Icon(
-                        //               Icons.home_filled,
-                        //               color: Colors.black,
-                        //               size: 25,
-                        //             ),
-                        //             Text(
-                        //               room.roomTitle,
-                        //               style: TextStyle(
-                        //                 fontSize: 16,
-                        //                 fontWeight: FontWeight.bold,
-                        //               ),
-                        //             ),
-                        //           ]),
-
-                        //           SizedBox(
-                        //               height: 2,
-                        //               child: Divider(color: Colors.black)),
-
-                        //           Text(
-                        //             "Rs." + room.price.toString(),
-                        //             style: TextStyle(
-                        //               fontSize: 18,
-                        //               fontWeight: FontWeight.bold,
-                        //             ),
-                        //           ),
-                        //           SizedBox(
-                        //             height: 5,
-                        //           ),
-                        //           Text(
-                        //             room.address,
-                        //             style: TextStyle(
-                        //               fontWeight: FontWeight.bold,
-                        //               fontSize: 16,
-                        //             ),
-                        //           ),
-                        //           // Text(
-                        //           //   propertyLists.propertyDescription,
-                        //           //   style: TextStyle(color: Colors.grey),
-                        //           // ),
-                        //           SizedBox(
-                        //               height: 30,
-                        //               child: Divider(color: Colors.black)),
-                        //           Row(
-                        //             children: [
-                        //               Icon(
-                        //                 Icons.bathtub,
-                        //                 color: Colors.black,
-                        //                 size: 25,
-                        //               ),
-                        //               SizedBox(
-                        //                 width: 10,
-                        //               ),
-                        //               Text(
-                        //                 room.bathroom,
-                        //                 style: TextStyle(
-                        //                   fontSize: 16,
-                        //                 ),
-                        //               ),
-                        //               SizedBox(
-                        //                 width: 5,
-                        //               ),
-                        //               Icon(
-                        //                 Icons.local_parking,
-                        //                 color: Colors.black,
-                        //                 size: 25,
-                        //               ),
-                        //               Text(
-                        //                 room.parking,
-                        //                 style: TextStyle(
-                        //                   fontSize: 16,
-                        //                 ),
-                        //               ),
-                        //               SizedBox(
-                        //                 width: 10,
-                        //               ),
-                        //             ],
-                        //           ),
-                        //           SizedBox(
-                        //               height: 30,
-                        //               child: Divider(color: Colors.black)),
-                        //           Row(
-                        //             children: [
-                        //               Icon(
-                        //                 Icons.bathtub,
-                        //                 color: Colors.black,
-                        //                 size: 25,
-                        //               ),
-                        //               SizedBox(
-                        //                 width: 10,
-                        //               ),
-                        //               Text(
-                        //                 room.bathroom,
-                        //                 style: TextStyle(
-                        //                   fontSize: 16,
-                        //                 ),
-                        //               ),
-                        //               SizedBox(
-                        //                 width: 5,
-                        //               ),
-                        //               Icon(
-                        //                 Icons.local_parking,
-                        //                 color: Colors.black,
-                        //                 size: 25,
-                        //               ),
-                        //               Text(
-                        //                 room.parking,
-                        //                 style: TextStyle(
-                        //                   fontSize: 16,
-                        //                 ),
-                        //               ),
-                        //               SizedBox(
-                        //                 width: 10,
-                        //               ),
-                        //             ],
-                        //           )
-                        //         ],
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
                         Container(
                           margin: EdgeInsets.fromLTRB(0, 8, 0, 10),
                           decoration: BoxDecoration(
@@ -318,7 +179,6 @@ class _ListedRoomsState extends State<ListedRooms> {
                                     ),
                                   ),
                                 ]),
-
                                 SizedBox(
                                     height: 2,
                                     child: Divider(color: Colors.black)),
@@ -382,7 +242,7 @@ class _ListedRoomsState extends State<ListedRooms> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    EditRoom()));
+                                                    EditRoom(room: room)));
                                       },
                                       color: Colors.green[600],
                                     ),
@@ -399,56 +259,17 @@ class _ListedRoomsState extends State<ListedRooms> {
                                         Icons.delete,
                                         size: 40,
                                       ),
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        session.set("roomid", room.roomId);
+                                        // print(
+                                        //     "roomid" + room.roomId.toString());
+                                        _showDialog();
+                                        // deleteRoom();
+                                      },
                                       color: Colors.red[600],
                                     ),
                                   ],
                                 ),
-                                // Text(
-                                //   propertyLists.propertyDescription,
-                                //   style: TextStyle(color: Colors.grey),
-                                // ),
-                                // SizedBox(
-                                //     height: 30,
-                                //     child: Divider(color: Colors.black)),
-                                // Row(
-                                //   children: [
-                                //     Icon(
-                                //       Icons.bathtub,
-                                //       color: Colors.black,
-                                //       size: 25,
-                                //     ),
-                                //     SizedBox(
-                                //       width: 10,
-                                //     ),
-                                //     Text(
-                                //       room.bathroom,
-                                //       style: TextStyle(
-                                //         fontSize: 16,
-                                //       ),
-                                //     ),
-                                //     SizedBox(
-                                //       width: 5,
-                                //     ),
-                                //     Icon(
-                                //       Icons.local_parking,
-                                //       color: Colors.black,
-                                //       size: 25,
-                                //     ),
-                                //     Text(
-                                //       room.parking,
-                                //       style: TextStyle(
-                                //         fontSize: 16,
-                                //       ),
-                                //     ),
-                                //     SizedBox(
-                                //       width: 10,
-                                //     ),
-                                //   ],
-                                // ),
-                                // SizedBox(
-                                //     height: 30,
-                                //     child: Divider(color: Colors.black)),
                               ],
                             ),
                           ),
@@ -462,6 +283,57 @@ class _ListedRoomsState extends State<ListedRooms> {
           ),
         ],
       ),
+    );
+  }
+
+  deleteRoom() async {
+    int userId = await FlutterSession().get("id");
+    String token = await FlutterSession().get("token");
+    int roomId = await FlutterSession().get("roomid");
+    String url = "http://10.0.2.2:5000/v1/$userId/$roomId/delroom";
+    var response = await http.delete(
+      url,
+      headers: {"Content-type": "application/json", "Authorization": "$token"},
+    );
+    print(response.body);
+    if (response.statusCode == 200) {
+      // Navigator.push(
+      //     context, MaterialPageRoute(builder: (context) => SettingsTwoPage()));
+    } else {
+      print(response);
+    }
+  }
+
+  void _showDialog() {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Alert!!"),
+          content: new Text("Click button to delete !"),
+          titleTextStyle: TextStyle(
+              fontSize: 25, color: Colors.red, fontWeight: FontWeight.bold),
+          contentTextStyle: TextStyle(
+              fontSize: 22, color: Colors.black, fontWeight: FontWeight.bold),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              splashColor: Colors.blue,
+              color: Colors.redAccent,
+              child: new Text(
+                "Delete",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              ),
+              onPressed: () {
+                deleteRoom();
+                Navigator.of(context).pop(SettingsTwoPage());
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
