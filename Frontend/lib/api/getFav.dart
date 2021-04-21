@@ -22,7 +22,7 @@ class ServicesFav {
       } else {
         print('Empty');
         print(userid);
-        // return List<Property>();
+        return List<FavData>();
       }
     } catch (e) {
       return List<FavData>();

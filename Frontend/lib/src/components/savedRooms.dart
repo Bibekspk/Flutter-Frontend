@@ -68,8 +68,9 @@ class _SavedRoomsState extends State<SavedRooms> {
             ),
             Container(
               height: 570,
-              margin: EdgeInsets.fromLTRB(0, 0, 0, 60),
+              margin: EdgeInsets.fromLTRB(0, 0, 0, 5),
               // color: Colors.grey,
+
               child: ListView.builder(
                 scrollDirection: Axis.vertical,
                 itemCount: _favroom.length == null ? 0 : _favroom.length,
@@ -88,7 +89,7 @@ class _SavedRoomsState extends State<SavedRooms> {
                     //   // print("User ==> " + room.userId.toString());
                     // },
                     child: Card(
-                      margin: EdgeInsets.fromLTRB(5, 5, 0, 45),
+                      margin: EdgeInsets.fromLTRB(5, 5, 0, 55),
                       child: Stack(
                         alignment: Alignment.topCenter,
                         children: <Widget>[

@@ -44,6 +44,10 @@ class FavData {
   String price;
   String parking;
   String bathroom;
+  // ignore: non_constant_identifier_names
+  String Latitude;
+  // ignore: non_constant_identifier_names
+  String Longitude;
   String thumbImg;
   UserDetails userDetails;
 
@@ -57,6 +61,10 @@ class FavData {
       this.price,
       this.parking,
       this.bathroom,
+      // ignore: non_constant_identifier_names
+      this.Latitude,
+      // ignore: non_constant_identifier_names
+      this.Longitude,
       this.thumbImg,
       this.userDetails});
 
@@ -70,6 +78,8 @@ class FavData {
     price = json['price'];
     parking = json['parking'];
     bathroom = json['bathroom'];
+    Latitude = json['Latitude'];
+    Longitude = json['Longitude'];
     thumbImg = json['thumb_Img'];
     userDetails = json['userDetails'] != null
         ? new UserDetails.fromJson(json['userDetails'])
@@ -87,6 +97,8 @@ class FavData {
     data['price'] = this.price;
     data['parking'] = this.parking;
     data['bathroom'] = this.bathroom;
+    data['Latitude'] = this.Latitude;
+    data['Longitude'] = this.Longitude;
     data['thumb_Img'] = this.thumbImg;
     if (this.userDetails != null) {
       data['userDetails'] = this.userDetails.toJson();
@@ -101,6 +113,7 @@ class UserDetails {
   String email;
   String contact;
   String password;
+  String address;
   int isAdmin;
 
   UserDetails(
@@ -109,6 +122,7 @@ class UserDetails {
       this.email,
       this.contact,
       this.password,
+      this.address,
       this.isAdmin});
 
   UserDetails.fromJson(Map<String, dynamic> json) {
@@ -117,6 +131,7 @@ class UserDetails {
     email = json['email'];
     contact = json['contact'];
     password = json['password'];
+    address = json['address'];
     isAdmin = json['isAdmin'];
   }
 
@@ -127,6 +142,7 @@ class UserDetails {
     data['email'] = this.email;
     data['contact'] = this.contact;
     data['password'] = this.password;
+    data['address'] = this.address;
     data['isAdmin'] = this.isAdmin;
     return data;
   }

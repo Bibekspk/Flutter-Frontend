@@ -176,7 +176,8 @@ class _EditProfileState extends State<EditProfile> {
         email: emailController.text.trim(),
         name: nameController.text.trim(),
         address: addressController.text,
-        phone: contactController.text);
+        phone: contactController.text,
+        isAdmin: int.parse("0"));
     int id = await FlutterSession().get('id');
     var response = await http.post("http://10.0.2.2:5000/api/editProfile/$id",
         headers: {"Content-type": "application/json"},
