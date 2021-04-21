@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_login_signup/models/RoomData.dart';
 import 'package:flutter_login_signup/src/components/map.dart';
 // import 'package:flutter_login_signup/src/components/settings.dart';
 import 'package:flutter_login_signup/src/homepage.dart';
@@ -18,6 +19,9 @@ import 'package:multi_image_picker/multi_image_picker.dart';
 // ignore: must_be_immutable
 class EditRoom extends StatefulWidget {
   String roomID;
+  final Data room;
+
+  EditRoom({this.room});
   @override
   _EditRoomPageState createState() => _EditRoomPageState();
 }
@@ -189,12 +193,14 @@ class _EditRoomPageState extends State<EditRoom> {
                   validator: (input) =>
                       !(input.length > 2) ? "Plese provide valid title" : null,
                   decoration: InputDecoration(
+                      hintText: widget.room.roomTitle,
+                      hintStyle: TextStyle(color: Colors.white),
                       enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5))),
                       focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5)),
                           borderSide: BorderSide(color: Colors.white)),
-                      labelText: 'Room Title',
+                      labelText: "Room Title",
                       labelStyle:
                           TextStyle(fontSize: 19.0, color: Colors.black),
                       errorStyle:
@@ -213,12 +219,14 @@ class _EditRoomPageState extends State<EditRoom> {
                       ? "Plese provide valid description"
                       : null,
                   decoration: InputDecoration(
+                      hintText: widget.room.description,
+                      hintStyle: TextStyle(color: Colors.white),
                       enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5))),
                       focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5)),
                           borderSide: BorderSide(color: Colors.white)),
-                      labelText: 'Description',
+                      labelText: "Description",
                       labelStyle:
                           TextStyle(fontSize: 19.0, color: Colors.black),
                       errorStyle:
@@ -237,12 +245,14 @@ class _EditRoomPageState extends State<EditRoom> {
                       ? "Plese provide valid address"
                       : null,
                   decoration: InputDecoration(
+                      hintText: widget.room.description,
+                      hintStyle: TextStyle(color: Colors.white),
                       enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5))),
                       focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5)),
                           borderSide: BorderSide(color: Colors.white)),
-                      labelText: 'Address',
+                      labelText: "Address",
                       labelStyle:
                           TextStyle(fontSize: 19.0, color: Colors.black),
                       errorStyle:
@@ -310,7 +320,9 @@ class _EditRoomPageState extends State<EditRoom> {
                       focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5)),
                           borderSide: BorderSide(color: Colors.white)),
-                      labelText: 'Number of Rooms',
+                      hintText: widget.room.roomno.toString(),
+                      hintStyle: TextStyle(color: Colors.white),
+                      labelText: "Room Number",
                       labelStyle:
                           TextStyle(fontSize: 19.0, color: Colors.black),
                       errorStyle:
@@ -336,7 +348,9 @@ class _EditRoomPageState extends State<EditRoom> {
                       focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5)),
                           borderSide: BorderSide(color: Colors.white)),
-                      labelText: 'Price',
+                      hintText: widget.room.price,
+                      hintStyle: TextStyle(color: Colors.white),
+                      labelText: "Room Price",
                       labelStyle:
                           TextStyle(fontSize: 19.0, color: Colors.black),
                       errorStyle:
@@ -505,34 +519,13 @@ class _EditRoomPageState extends State<EditRoom> {
                       textColor: Colors.white,
                       color: Color.fromRGBO(239, 108, 0, 0.9),
                       child: Text(
-                        'Add Room',
+                        'Edit Room',
                         style: TextStyle(fontSize: 23),
                       ),
                       onPressed: () async {
                         validate();
                         singleUpload();
                         sendImg();
-
-                        // if (validate()) {
-                        // RoomAPIService apiService = new RoomAPIService();
-                        // apiService.editroom(editRoom).then((value) {
-                        //   if (value != null) {
-                        //     if (value.success) {
-                        //       // session.set("roomid", value.roomid);
-                        //       singleUpload();
-                        //       sendImg();
-                        //     } else {
-                        //       session.set("message", value.error);
-                        //       print("Error" + value.error);
-                        //       EasyLoading.showError("Please provide values");
-                        //     }
-                        //   }
-                        // });
-                        // }
-                        //  else {
-                        //   EasyLoading.showError(
-                        //       'Please provide all the values');
-                        // }
                       })),
             ]),
           )),

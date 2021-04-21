@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+// import 'package:flutter_easyloading/flutter_easyloading.dart';
 // import 'package:flutter_login_signup/models/searchModel.dart';
 import 'package:flutter_login_signup/src/components/room_carosuel.dart';
 // import 'package:flutter_login_signup/src/components/savedRooms.dart';
@@ -116,15 +118,23 @@ class _State extends State<Body> {
                         suffixIcon: IconButton(
                           icon: Icon(Icons.search),
                           onPressed: () {
-                            print("Search " + search.text);
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SearchedRooms(
-                                          search: search.text,
-                                          startPrice: startRange,
-                                          endPrice: endRange,
-                                        )));
+                            if ((widget.startPrice != null ||
+                                    search.text != "Search") ||
+                                widget.endPrice != null) {
+                              print("Search " + search.text);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SearchedRooms(
+                                            search: search.text,
+                                            startPrice: startRange,
+                                            endPrice: endRange,
+                                          )));
+                            } else {
+                              EasyLoading.showInfo(
+                                  "Provide Range of Price for better search",
+                                  maskType: EasyLoadingMaskType.black);
+                            }
                           },
                         )),
                   ),

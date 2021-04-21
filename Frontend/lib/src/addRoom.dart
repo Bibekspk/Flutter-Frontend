@@ -305,10 +305,10 @@ class _AddRoomPageState extends State<Roompage> {
                                     builder: (context) => MapsGoogle()));
                             print(info.latitude.toString());
                             setState(() {
-                              latitude = info.latitude.toString()
-                                  as TextEditingController;
-                              longitude = info.longitude.toString()
-                                  as TextEditingController;
+                              latitude.text = info.latitude.toString();
+
+                              longitude.text = info.longitude.toString();
+
                               print("asdfsadf" + latitude.text);
                               print("saasdf" + longitude.text);
                             });
