@@ -4,32 +4,32 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_login_signup/models/RoomData.dart';
 
 class Services {
-  static const String url = 'http://10.0.2.2:5000/v1/getRoomDetail';
   static const String searchurl = 'http://10.0.2.2:5000/v1/searchedRoom';
   static const String listRoomUrl = 'http://10.0.2.2:5000/v1/getRooms';
 
-  static Future<List<Data>> getRoom() async {
+  static Future<List<Datum>> getRoom() async {
+    const String url = 'http://10.0.2.2:5000/v1/getRoomDetail';
     try {
       final response = await http.get(url);
       if (response.statusCode == 200) {
-        // print(response.body);
+        print(response.body);
         final body = response.body;
         // print(body.length);
         final rooms = roomFromJson(body);
-        List<Data> room = rooms.data;
+        List<Datum> room = rooms.data;
         // List property = properties.data.toString();
-        // print(property[0].propertyAddress);
+        print(room[0].address);
         return room;
       } else {
         print('Khali cha hai');
-        // return List<Property>();
+        return List<Datum>();
       }
     } catch (e) {
-      return List<Data>();
+      return List<Datum>();
     }
   }
 
-  static Future<List<Data>> searchedRoom(
+  static Future<List<Datum>> searchedRoom(
       String search, String start, String end) async {
     try {
       final response = await http.get(
@@ -43,20 +43,20 @@ class Services {
         final body = response.body;
         // print(body.length);
         final rooms = roomFromJson(body);
-        List<Data> room = rooms.data;
+        List<Datum> room = rooms.data;
         // List property = properties.data.toString();
         // print(property[0].propertyAddress);
         return room;
       } else {
         print('Khali cha hai');
-        return List<Data>();
+        return List<Datum>();
       }
     } catch (e) {
-      return List<Data>();
+      return List<Datum>();
     }
   }
 
-  static Future<List<Data>> listedRoom() async {
+  static Future<List<Datum>> listedRoom() async {
     int userid = await FlutterSession().get("id");
     try {
       final response = await http.get(
@@ -68,15 +68,15 @@ class Services {
         final body = response.body;
         // print(body.length);
         final rooms = roomFromJson(body);
-        List<Data> room = rooms.data;
+        List<Datum> room = rooms.data;
         // List property = properties.data.toString();
         // print(property[0].propertyAddress);
         return room;
       } else {
-        return List<Data>();
+        return List<Datum>();
       }
     } catch (e) {
-      return List<Data>();
+      return List<Datum>();
     }
   }
 }

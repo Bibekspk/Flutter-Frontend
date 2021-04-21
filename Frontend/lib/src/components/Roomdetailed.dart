@@ -18,7 +18,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 // }
 
 class PropertyListsView extends StatefulWidget {
-  final Data room;
+  final Datum room;
 
   PropertyListsView({this.room});
   @override
@@ -26,7 +26,7 @@ class PropertyListsView extends StatefulWidget {
 }
 
 class _PropertyListsViewState extends State<PropertyListsView> {
-  List<Data> _room;
+  List<Datum> _room;
   // String uncheckFavorites = widget.room.favStatus;
   // String favStatus = widget.room.favStatus; //getting value of favStatus
   // bool uncheckFavorites = favStatus == "true" ? true : false;

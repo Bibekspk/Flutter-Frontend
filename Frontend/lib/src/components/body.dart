@@ -6,8 +6,8 @@ import 'package:flutter_login_signup/src/components/searchedRoom.dart';
 // import 'package:flutter_login_signup/src/components/savedRooms.dart';
 import 'package:flutter_login_signup/src/components/searchfilter.dart';
 import 'package:flutter_session/flutter_session.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+// import 'package:http/http.dart' as http;
+// import 'dart:convert';
 
 // ignore: must_be_immutable
 class Body extends StatefulWidget {
@@ -24,11 +24,11 @@ class _State extends State<Body> {
   var images = FlutterSession().get('imagename');
   var startRange;
   var endRange;
-  Future allRooms() async {
-    var url = "http://10.0.2.2:5000/v1/getRoomDetail";
-    var response = await http.get(url);
-    return json.decode(response.body);
-  }
+  // Future allRooms() async {
+  //   var url = "http://10.0.2.2:5000/v1/getRoomDetail";
+  //   var response = await http.get(url);
+  //   return json.decode(response.body);
+  // }
 
   @override
   void initState() {
@@ -37,7 +37,7 @@ class _State extends State<Body> {
       startRange = widget.startPrice;
       endRange = widget.endPrice;
     });
-    allRooms();
+    // allRooms();
   }
 
   @override
@@ -47,7 +47,7 @@ class _State extends State<Body> {
     return SingleChildScrollView(
         child: Column(children: <Widget>[
       Container(
-        height: size.height * 0.24, //covers 20 percent
+        height: size.height * 0.22, //covers 20 percent
         decoration: BoxDecoration(
             color: Colors.green,
             borderRadius: BorderRadius.only(
@@ -58,13 +58,13 @@ class _State extends State<Body> {
           child: Stack(
             children: <Widget>[
               Container(
-                  margin: EdgeInsets.fromLTRB(15, 2, 0, 0),
+                  margin: EdgeInsets.fromLTRB(15, 0, 0, 0),
                   child: Row(
                     children: <Widget>[
                       Text(
                         "Welcome, ",
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 21),
+                            fontWeight: FontWeight.bold, fontSize: 19),
                       ),
                       FutureBuilder(
                           future: FlutterSession().get('name'),
@@ -72,14 +72,14 @@ class _State extends State<Body> {
                             return Text(
                                 snapshot.hasData ? snapshot.data : "Loading",
                                 style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 21));
+                                    fontWeight: FontWeight.bold, fontSize: 19));
                           }),
                       Spacer(),
                       IconButton(
                         padding: EdgeInsets.fromLTRB(0, 0, 35, 0),
                         icon: Icon(
                           Icons.person_sharp,
-                          size: 40,
+                          size: 35,
                         ),
                         onPressed: () {},
                       ),
@@ -88,8 +88,8 @@ class _State extends State<Body> {
               Positioned(
                 child: Container(
                   alignment: Alignment.center,
-                  margin: EdgeInsets.fromLTRB(15, 48, 10, 0),
-                  height: 54,
+                  margin: EdgeInsets.fromLTRB(15, 40, 10, 0),
+                  height: 45,
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20),
@@ -131,10 +131,10 @@ class _State extends State<Body> {
                 ),
               ),
               Container(
-                  height: 50,
+                  height: 35,
                   // width: 100,
                   padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                  margin: EdgeInsets.fromLTRB(285, 109, 5, 0),
+                  margin: EdgeInsets.fromLTRB(240, 90, 5, 0),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20.0),
                   ),

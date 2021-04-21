@@ -25,7 +25,7 @@ class SearchedRooms extends StatefulWidget {
 }
 
 class _SearchedRoomsState extends State<SearchedRooms> {
-  List<Data> _room = [];
+  List<Datum> _room = [];
   bool _loading;
   var session = FlutterSession();
 
@@ -91,7 +91,7 @@ class _SearchedRoomsState extends State<SearchedRooms> {
               scrollDirection: Axis.vertical,
               itemCount: _room.length == null ? 0 : _room.length,
               itemBuilder: (BuildContext context, int index) {
-                Data room = _room[index];
+                Datum room = _room[index];
                 return GestureDetector(
                   onTap: () {
                     Navigator.push(

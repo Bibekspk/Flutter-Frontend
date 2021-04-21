@@ -9,7 +9,7 @@ import 'package:flutter_login_signup/models/InspectionModel.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 
 class SiteRequest extends StatefulWidget {
-  final Data room;
+  final Datum room;
 
   @override
   _RequestInspectionState createState() => _RequestInspectionState();

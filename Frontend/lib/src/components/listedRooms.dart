@@ -26,7 +26,7 @@ class ListedRooms extends StatefulWidget {
 }
 
 class _ListedRoomsState extends State<ListedRooms> {
-  List<Data> _room = [];
+  List<Datum> _room = [];
   bool _loading;
   var session = FlutterSession();
 
@@ -91,7 +91,7 @@ class _ListedRoomsState extends State<ListedRooms> {
               scrollDirection: Axis.vertical,
               itemCount: _room.length == null ? 0 : _room.length,
               itemBuilder: (BuildContext context, int index) {
-                Data room = _room[index];
+                Datum room = _room[index];
                 return GestureDetector(
                   onTap: () {
                     Navigator.push(

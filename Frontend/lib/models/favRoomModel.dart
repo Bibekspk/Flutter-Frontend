@@ -101,7 +101,7 @@ class UserDetails {
   String email;
   String contact;
   String password;
-  Null isAdmin;
+  int isAdmin;
 
   UserDetails(
       {this.id,

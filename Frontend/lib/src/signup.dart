@@ -212,6 +212,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           ),
                           onPressed: () {
                             validate();
+                            print(regmodel.isAdmin);
                             print(emailController.text);
                           })),
                   Container(
@@ -246,7 +247,8 @@ class _SignUpPageState extends State<SignUpPage> {
         password: passwordController.text,
         passwordconfirm: confirmpasswordController.text,
         address: addressController.text,
-        phone: contactController.text);
+        phone: contactController.text,
+        isAdmin: int.parse("0"));
     var response = await http.post("http://10.0.2.2:5000/api/register",
         headers: {"Content-type": "application/json"},
         body: json.encode(regmodel.toJson()));

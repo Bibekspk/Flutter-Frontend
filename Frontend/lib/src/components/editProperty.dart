@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_login_signup/src/components/map.dart';
-import 'package:flutter_login_signup/src/components/settings.dart';
+// import 'package:flutter_login_signup/src/components/settings.dart';
 import 'package:flutter_login_signup/src/homepage.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_login_signup/models/addRoomodel.dart';

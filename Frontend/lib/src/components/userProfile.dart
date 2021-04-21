@@ -52,7 +52,7 @@ class _ProfileEightPageState extends State<ProfileEightPage> {
             ),
           ),
           Container(
-            height: 600,
+            height: 500,
             margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
             // color: Colors.grey,
             child: ListView.builder(

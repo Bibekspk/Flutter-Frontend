@@ -5,6 +5,7 @@ class RegisterModel {
   String email;
   String phone;
   String address;
+  int isAdmin;
 
   // String xyz;
   RegisterModel(
@@ -13,7 +14,8 @@ class RegisterModel {
       this.passwordconfirm,
       this.email,
       this.phone,
-      this.address});
+      this.address,
+      this.isAdmin});
   // factory Model.fromJson(Map<String, dynamic> json) => _$ModelFromJson(json);
   Map<String, dynamic> toJson() => _$ModelToJson(this);
 
@@ -23,7 +25,8 @@ class RegisterModel {
         'passwordconfirm': instance.passwordconfirm,
         'email': instance.email,
         'phone': instance.phone,
-        'address': instance.address
+        'address': instance.address,
+        'isAdmin': instance.isAdmin
       };
 }
 // Model _$ModelFromJson(Map<String, dynamic> json) {

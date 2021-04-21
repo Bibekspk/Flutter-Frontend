@@ -26,7 +26,7 @@ class UserData {
   String contact;
   String password;
   String address;
-  Null isAdmin;
+  int isAdmin;
 
   UserData(
       {this.id,
