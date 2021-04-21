@@ -55,19 +55,6 @@ class _AddRoomPageState extends State<Roompage> {
     });
   }
 
-  // Future<bool> checkAndRequestCameraPermissions() async {
-  //   PermissionStatus permission = await PermissionHandler()
-  //       .checkPermissionStatus(PermissionGroup.location);
-  //   if (permission != PermissionStatus.granted) {
-  //     Map<PermissionGroup, PermissionStatus> permissions =
-  //         await PermissionHandler()
-  //             .requestPermissions([PermissionGroup.location]);
-  //     return permissions[PermissionGroup.location] == PermissionStatus.granted;
-  //   } else {
-  //     return true;
-  //   }
-  // }
-
   Widget buildGridView() {
     return GridView.count(
       crossAxisCount: 3,
@@ -82,21 +69,6 @@ class _AddRoomPageState extends State<Roompage> {
       }),
     );
   }
-
-  // Widget buildGridView1() {
-  //   return GridView.count(
-  //     crossAxisCount: 3,
-  //     crossAxisSpacing: 10,
-  //     children: List.generate(mainimage.length, (index) {
-  //       Asset asset = mainimage[index];
-  //       return AssetThumb(
-  //         asset: asset,
-  //         width: 300,
-  //         height: 300,
-  //       );
-  //     }),
-  //   );
-  // }
 
   Future<void> loadAssets() async {
     List<Asset> resultList = [];
@@ -129,53 +101,6 @@ class _AddRoomPageState extends State<Roompage> {
       print(images);
     });
   }
-
-  // Future<void> loadoneImg() async {
-  //   List<Asset> oneList = [];
-
-  //   try {
-  //     oneList = await MultiImagePicker.pickImages(
-  //       maxImages: 1,
-  //       enableCamera: true,
-  //       selectedAssets: mainimage,
-  //       cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
-  //       materialOptions: MaterialOptions(
-  //         actionBarColor: "#abcdef",
-  //         actionBarTitle: "Select Photos",
-  //         allViewTitle: "All Photos",
-  //         useDetailsView: false,
-  //         selectCircleStrokeColor: "#000000",
-  //       ),
-  //     );
-  //   } on Exception catch (e) {
-  //     print(e.toString());
-  //   }
-
-  //   // If the widget was removed from the tree while the asynchronous platform
-  //   // message was in flight, we want to discard the reply rather than calling
-  //   // setState to update our non-existent appearance.
-  //   if (!mounted) return;
-
-  //   setState(() {
-  //     mainimage = oneList;
-  //     print("main images");
-  //     print(mainimage);
-  //   });
-  // }
-
-  // // @override
-  // // void intitState() {
-  // //   super.initState();
-
-  // //   //For easy loading (can be removed mark *)
-  // //   EasyLoading.addStatusCallback((status) {
-  // //     print('EasyLoading Status $status');
-  // //     if (status == EasyLoadingStatus.dismiss) {
-  // //       _timer?.cancel();
-  // //     }
-  // //   });
-  // //   //EasyLoading.showSuccess('Use in initState');
-  // // }
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -384,15 +309,12 @@ class _AddRoomPageState extends State<Roompage> {
                   splashColor: Colors.white,
                   icon: Icon(Icons.add_a_photo, color: Colors.blue, size: 50),
                   onPressed: () {
-                    // takePhoto(ImageSource.gallery);
-                    // loadoneImg();
                     getImage();
                     print(mainimage);
                     print("main img above ");
                   },
                 ),
               ),
-              // SizedBox(height: 1),
               Container(
                 alignment: Alignment.topLeft,
                 padding: EdgeInsets.fromLTRB(50, 0, 50, 50),
@@ -416,7 +338,6 @@ class _AddRoomPageState extends State<Roompage> {
                   splashColor: Colors.white,
                   icon: Icon(Icons.add_a_photo, color: Colors.blue, size: 50),
                   onPressed: () {
-                    // takePhoto(ImageSource.gallery);
                     loadAssets();
                     // print(images);
                   },
@@ -627,12 +548,8 @@ class _AddRoomPageState extends State<Roompage> {
           );
 
           FormData formData = FormData.fromMap({"image": multipartFile});
-          // EasyLoading.show(status: 'Uploading Image...');
+          EasyLoading.show(status: 'Uploading Image...');
 
-          //Image post
-
-          //getting token from flutter session.
-          //getting token from flutter session.
           String token = await FlutterSession().get("token");
           int userId = await FlutterSession().get("id");
           int roomId = await FlutterSession().get("roomid");

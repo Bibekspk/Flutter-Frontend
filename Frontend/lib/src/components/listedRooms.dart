@@ -88,7 +88,7 @@ class _ListedRoomsState extends State<ListedRooms> {
             ),
           ),
           Container(
-            height: 530,
+            height: 450,
             margin: EdgeInsets.fromLTRB(0, 0, 0, 15),
             // color: Colors.grey,
             child: ListView.builder(

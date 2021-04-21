@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-// import 'package:flutter_easyloading/flutter_easyloading.dart';
-// import 'package:flutter_login_signup/models/searchModel.dart';
 import 'package:flutter_login_signup/src/components/room_carosuel.dart';
-// import 'package:flutter_login_signup/src/components/savedRooms.dart';
 import 'package:flutter_login_signup/src/components/searchedRoom.dart';
-// import 'package:flutter_login_signup/src/components/savedRooms.dart';
 import 'package:flutter_login_signup/src/components/searchfilter.dart';
 import 'package:flutter_session/flutter_session.dart';
 // import 'package:http/http.dart' as http;
@@ -23,14 +19,9 @@ class Body extends StatefulWidget {
 class _State extends State<Body> {
   // Search searchmodel = new Search();
   TextEditingController search = TextEditingController();
-  var images = FlutterSession().get('imagename');
+  // var images = FlutterSession().get('imagename');
   var startRange;
   var endRange;
-  // Future allRooms() async {
-  //   var url = "http://10.0.2.2:5000/v1/getRoomDetail";
-  //   var response = await http.get(url);
-  //   return json.decode(response.body);
-  // }
 
   @override
   void initState() {
@@ -118,8 +109,7 @@ class _State extends State<Body> {
                         suffixIcon: IconButton(
                           icon: Icon(Icons.search),
                           onPressed: () {
-                            if ((widget.startPrice != null ||
-                                    search.text != "Search") ||
+                            if (widget.startPrice != null ||
                                 widget.endPrice != null) {
                               print("Search " + search.text);
                               Navigator.push(

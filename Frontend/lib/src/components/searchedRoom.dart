@@ -84,7 +84,7 @@ class _SearchedRoomsState extends State<SearchedRooms> {
             ),
           ),
           Container(
-            height: 450,
+            height: 430,
             margin: EdgeInsets.fromLTRB(0, 0, 0, 15),
             // color: Colors.grey,
             child: ListView.builder(

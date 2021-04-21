@@ -347,50 +347,8 @@ class _PropertyCarouselState extends State<PropertyCarousel> {
                                   ),
                                 ],
                               ),
-                              Text(
-                                "",
-                                style: TextStyle(color: Colors.grey),
-                              ),
                               SizedBox(
-                                  height: 30,
-                                  child: Divider(color: Colors.black)),
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.bathtub,
-                                    color: Colors.black,
-                                    size: 25,
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    room.bathroom,
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Icon(
-                                    Icons.local_parking,
-                                    color: Colors.black,
-                                    size: 25,
-                                  ),
-                                  Text(
-                                    room.parking,
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                  height: 30,
+                                  height: 10,
                                   child: Divider(color: Colors.black)),
                             ],
                           ),

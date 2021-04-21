@@ -19,7 +19,7 @@ import 'package:multi_image_picker/multi_image_picker.dart';
 // ignore: must_be_immutable
 class EditRoom extends StatefulWidget {
   String roomID;
-  final Data room;
+  final Datum room;
 
   EditRoom({this.room});
   @override
