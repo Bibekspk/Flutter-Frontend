@@ -107,8 +107,9 @@ class _State extends State<Body> {
                       suffixIcon: IconButton(
                         icon: Icon(Icons.search),
                         onPressed: () {
-                          if (widget.startPrice != null ||
-                              widget.endPrice != null) {
+                          if ((widget.startPrice != null ||
+                                  widget.endPrice != null) &&
+                              search.text == "Search") {
                             print("Search " + search.text);
                             Navigator.push(
                                 context,

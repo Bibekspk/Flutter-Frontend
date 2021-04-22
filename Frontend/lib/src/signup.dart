@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_login_signup/src/loginPage.dart';
 import 'package:flutter_login_signup/src/welcomePage.dart';
 import 'package:flutter_login_signup/models/registermodel.dart';
@@ -211,9 +212,12 @@ class _SignUpPageState extends State<SignUpPage> {
                             style: TextStyle(fontSize: 23),
                           ),
                           onPressed: () {
-                            validate();
-                            print(regmodel.isAdmin);
-                            print(emailController.text);
+                            if (validate()) {
+                              EasyLoading.showSuccess(
+                                  "User Registered successfully");
+                              print(regmodel.isAdmin);
+                              print(emailController.text);
+                            }
                           })),
                   Container(
                       child: Row(
