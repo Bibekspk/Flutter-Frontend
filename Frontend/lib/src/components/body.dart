@@ -108,7 +108,9 @@ class _State extends State<Body> {
                         icon: Icon(Icons.search),
                         onPressed: () {
                           if (widget.startPrice != null && search.text != "") {
-                            print("Search " + search.text);
+                            print("Search Text" + search.text);
+                            print(startRange);
+                            print(endRange);
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
