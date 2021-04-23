@@ -213,8 +213,6 @@ class _SignUpPageState extends State<SignUpPage> {
                           ),
                           onPressed: () {
                             if (validate()) {
-                              EasyLoading.showSuccess(
-                                  "User Registered successfully");
                               print(regmodel.isAdmin);
                               print(emailController.text);
                             }
@@ -258,9 +256,11 @@ class _SignUpPageState extends State<SignUpPage> {
         body: json.encode(regmodel.toJson()));
     print(response.body);
     if (response.statusCode == 200) {
+      EasyLoading.showSuccess("User Registered successfully");
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => WelcomePage()));
     } else {
+      EasyLoading.showInfo("No Response From the Server");
       print(response);
     }
   }
