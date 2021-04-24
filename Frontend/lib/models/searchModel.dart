@@ -49,6 +49,7 @@ class SearchData {
   String price;
   String parking;
   String bathroom;
+  String approveStatus;
   String thumbImg;
   List<String> images;
   UserDetail userDetail;
@@ -65,6 +66,7 @@ class SearchData {
       this.parking,
       this.bathroom,
       this.thumbImg,
+      this.approveStatus,
       this.images,
       // this.favStatus,
       this.userDetail});
@@ -79,6 +81,7 @@ class SearchData {
     price = json['price'];
     parking = json['parking'];
     bathroom = json['bathroom'];
+    approveStatus = json['ApproveStatus'];
     thumbImg = json['thumb_Img'];
     // favStatus = json['favStatus'];
     images = json['images'].cast<String>();
@@ -98,6 +101,7 @@ class SearchData {
     data['price'] = this.price;
     data['parking'] = this.parking;
     data['bathroom'] = this.bathroom;
+    data['ApproveStatus'] = this.approveStatus;
     data['thumb_Img'] = this.thumbImg;
     // data['favStatus'] = this.favStatus;
     data['images'] = this.images;

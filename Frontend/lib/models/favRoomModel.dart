@@ -49,6 +49,7 @@ class FavData {
   // ignore: non_constant_identifier_names
   String Longitude;
   String thumbImg;
+  String approveStatus;
   UserDetails userDetails;
 
   FavData(
@@ -66,6 +67,7 @@ class FavData {
       // ignore: non_constant_identifier_names
       this.Longitude,
       this.thumbImg,
+      this.approveStatus,
       this.userDetails});
 
   FavData.fromJson(Map<String, dynamic> json) {
@@ -81,6 +83,7 @@ class FavData {
     Latitude = json['Latitude'];
     Longitude = json['Longitude'];
     thumbImg = json['thumb_Img'];
+    approveStatus = json['ApproveStatus'];
     userDetails = json['userDetails'] != null
         ? new UserDetails.fromJson(json['userDetails'])
         : null;
@@ -100,6 +103,7 @@ class FavData {
     data['Latitude'] = this.Latitude;
     data['Longitude'] = this.Longitude;
     data['thumb_Img'] = this.thumbImg;
+    data['ApproveStatus'] = this.approveStatus;
     if (this.userDetails != null) {
       data['userDetails'] = this.userDetails.toJson();
     }

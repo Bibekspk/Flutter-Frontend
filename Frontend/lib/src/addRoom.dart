@@ -484,16 +484,16 @@ class _AddRoomPageState extends State<Roompage> {
 
   void sendregdata() async {
     addroommodel = AddRoom(
-      roomTitle: roomtitle.text,
-      description: description.text,
-      address: address.text,
-      price: price.text,
-      roomno: roomno.text,
-      parking: parking,
-      bathroom: bathroom,
-      latitude: latitude.text,
-      longitude: longitude.text,
-    );
+        roomTitle: roomtitle.text,
+        description: description.text,
+        address: address.text,
+        price: price.text,
+        roomno: roomno.text,
+        parking: parking,
+        bathroom: bathroom,
+        latitude: latitude.text,
+        longitude: longitude.text,
+        approveStatus: "false");
   }
 
   bool validate() {

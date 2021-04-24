@@ -49,6 +49,7 @@ class Datum {
   String parking;
   String bathroom;
   String thumbImg;
+  String approveStatus;
   // ignore: non_constant_identifier_names
   String Latitude;
   // ignore: non_constant_identifier_names
@@ -67,6 +68,7 @@ class Datum {
       this.price,
       this.parking,
       this.bathroom,
+      this.approveStatus,
       this.thumbImg,
       // ignore: non_constant_identifier_names
       this.Latitude,
@@ -86,6 +88,7 @@ class Datum {
     bathroom = json['bathroom'];
     thumbImg = json['thumb_Img'];
     Latitude = json['Latitude'];
+    approveStatus = json['ApproveStatus'];
     Longitude = json['Longitude'];
     // favStatus = json['favStatus'];
     images = json['images'].cast<String>();
@@ -107,6 +110,7 @@ class Datum {
     data['bathroom'] = this.bathroom;
     data['thumb_Img'] = this.thumbImg;
     data['Latitude'] = this.Latitude;
+    data['ApproveStatus'] = this.approveStatus;
     data['Longitude'] = this.Longitude;
     // data['favStatus'] = this.favStatus;
     data['images'] = this.images;

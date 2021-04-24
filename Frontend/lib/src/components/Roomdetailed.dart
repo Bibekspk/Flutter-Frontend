@@ -542,6 +542,29 @@ class _PropertyListsViewState extends State<PropertyListsView> {
                             Row(
                               children: [
                                 Icon(
+                                  Icons.verified_rounded,
+                                  size: 35,
+                                ),
+                                Text(
+                                  " Verified Status : ",
+                                  style: TextStyle(
+                                      fontSize: 19,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  widget.room.approveStatus,
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Icon(
                                   Icons.supervised_user_circle,
                                   size: 35,
                                 ),
